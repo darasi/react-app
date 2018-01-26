@@ -1,0 +1,14 @@
+@import 'variables';
+@import 'mixins';
+
+section.hero {
+    padding: 3rem;
+
+    @include md {
+        padding: 1rem 0rem;
+
+        .ui.segment {
+            border-radius: 0;
+        }
+    }
+}
