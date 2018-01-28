@@ -3,22 +3,14 @@ import PropTypes from 'prop-types';
 import { Helmet } from "react-helmet";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actions  from '../store/actions/home';
-
+import * as actions  from '../store/actions/users';
 
 import SectionHero from '../components/SectionHero';
 
 class HomePage extends Component {
 
-  state = {
-    filter: {
-      offset: 0,
-      limit: 10
-    }
-  }
-
   componentDidMount() {
-    // this.props.getPosts(this.state.filter);
+    this.props.getUsers();
   }
 
   render() {
@@ -26,25 +18,27 @@ class HomePage extends Component {
       <Helmet key="Helmet">
         <title>react koa</title>
       </Helmet>,
-      <SectionHero key="SectionHero" posts={this.props.posts} />
+      <SectionHero key="SectionHero" users={this.props.users} />
     ];
   }
 }
 
+HomePage.propTypes = {
+  getUsers: PropTypes.func.isRequired,
+  users: PropTypes.shape({
+    loading: PropTypes.bool,
+    errors: PropTypes.object,
+    data: PropTypes.object
+  }).isRequired
+};
+
 const mapStateToProps = (state) => ({
-  posts: state.posts
+  users: state.users
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getPosts: actions.getPosts
+  getUsers: actions.getUsers
 },dispatch)
 
-HomePage.propTypes = {
-  getPosts: PropTypes.func.isRequired,
-  posts: PropTypes.shape({
-    loading: PropTypes.bool,
-    data: PropTypes.arrayOf(PropTypes.object)
-  }).isRequired
-};
 
 export default connect(mapStateToProps,mapDispatchToProps)(HomePage)

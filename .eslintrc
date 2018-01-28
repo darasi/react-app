@@ -29,6 +29,7 @@
                 "some": [ "nesting", "id" ]
             },
             "allowChildren": false,
-        }]
+		}],
+		"import/prefer-default-export": "off"
 	}
 }

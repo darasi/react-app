@@ -1,14 +1,16 @@
 import axios from 'axios';
 
-const postsUrl = 'https://www.reddit.com/r/politics.json';
+const apiUrl = 'http://localhost:8000/api';
 
-class Api {
-  static getPosts(filter) {
-    axios.get(postsUrl, {
-        params: filter
-      })
-      .then(response => response.data)
-      .catch(error => error);
+const instance = axios.create({
+  baseURL: apiUrl,
+  headers: { 'Content-Type': 'application/json' }
+});
+
+const Api = {
+  user: {
+    getUsers: (filter = null) => instance.get('/users', { params: filter }).then(res => res.data),
+    register: (data = null) => instance.post("/register", data).then(res => res.data)
   }
 }
 

@@ -1,18 +1,21 @@
 import React from "react";
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import { Button, Form } from 'semantic-ui-react';
+import { Button, Form, Transition, Label } from "semantic-ui-react";
+import * as actions  from '../../store/actions/auth';
 
 class RegisterForm extends React.Component {
   state = {
-    loading: false,
     data: {
       name: "",
       email: "",
       password: ""
-    },
-    errors: {}
+    }
   };
+  componentDidMount() {
+    // console.log(this.props);
+  }
 
   onChange = e =>
     this.setState({
@@ -21,34 +24,38 @@ class RegisterForm extends React.Component {
 
   onSubmit = e => {
     e.preventDefault();
-    if (Object.keys(this.errors).length === 0) {
-      this.setState({ loading: true });
-      this.props
-        .submit(this.state.data)
-        .catch(err =>
-          this.setState({ errors: err.response.data.errors, loading: false })
-        );
-    }
+    this.props.register(this.state.data);
   };
 
   render() {
-    const { data, errors, loading } = this.state;
+    const { data } = this.state;
+    const { auth } = this.props;
+    const { formErrors } = this.props;
 
     return (
-      <Form onSubmit={this.onSubmit} loading={loading}>
-        <Form.Field>
+      <Form onSubmit={this.onSubmit} loading={auth.loading}>
+        {
+          formErrors.details && formErrors.details.map(error => (
+              <Transition key={error.message}>
+                <div className="error-message">
+                  <div className="text">{error.message}</div>
+                </div>
+              </Transition>
+            )
+          )
+        }
+        <Form.Field required>
           <label htmlFor="name">Name</label>
           <input
             id="name"
-            type="name"
+            type="text"
             name="name"
             value={data.name}
             onChange={this.onChange}
-            placeholder='Name'
-            required
+            placeholder="Name"
           />
         </Form.Field>
-        <Form.Field>
+        <Form.Field required>
           <label htmlFor="email">Email</label>
           <input
             id="email"
@@ -56,11 +63,10 @@ class RegisterForm extends React.Component {
             name="email"
             value={data.email}
             onChange={this.onChange}
-            placeholder='Email'
-            required
+            placeholder="Email"
           />
         </Form.Field>
-        <Form.Field>
+        <Form.Field required>
           <label htmlFor="password">Password</label>
           <input
             id="password"
@@ -68,18 +74,28 @@ class RegisterForm extends React.Component {
             name="password"
             value={data.password}
             onChange={this.onChange}
-            placeholder='Password'
-            required
+            placeholder="Password"
           />
         </Form.Field>
-        <Button type='submit'>Submit</Button>
+        <Button type="submit" fluid>Submit</Button>
       </Form>
     );
   }
 }
 
 RegisterForm.propTypes = {
-  submit: PropTypes.func.isRequired
+  register: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  formErrors: PropTypes.object.isRequired
 };
 
-export default RegisterForm;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+  formErrors: state.formErrors.register,
+})
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  register: actions.register,
+},dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm)

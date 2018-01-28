@@ -1,5 +1,5 @@
 import Loadable from 'react-loadable';
-import { homeThunk, postsThunk } from '../../store/actions/thunk';
+import { homeThunk, getUsersThunk } from '../../store/actions/thunk';
 import Loading from '../../components/Loading';
 
 const LoadableHomePage = Loadable({
@@ -23,7 +23,7 @@ const routesConfig = [{
   path: '/',
   exact: true,
   component: LoadableHomePage,
-  thunk: postsThunk,
+  thunk: getUsersThunk,
   authRoute: false,
   guestRoute: false
 }, {
@@ -35,7 +35,7 @@ const routesConfig = [{
 }, {
   path: '/user',
   component: LoadableUser,
-  thunk: () => {},
+  thunk: getUsersThunk,
   authRoute: true,
   guestRoute: false
 }, {

@@ -14,7 +14,7 @@ class Home extends Component {
   }
 
   componentDidMount(){
-    this.props.getHomeInfo();
+    // this.props.getHomeInfo();
     console.log(this.props);
   }
 

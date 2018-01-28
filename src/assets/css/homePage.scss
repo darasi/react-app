@@ -2,6 +2,7 @@
 @import 'mixins';
 
 section.hero {
+    height: 200vh;
     padding: 3rem;
 
     @include md {

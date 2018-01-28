@@ -5,13 +5,14 @@ require('babel-register')({
   plugins: ["react-loadable/babel",'syntax-dynamic-import',"dynamic-import-node"]
 });
 
-const app = require('./app.js').default,
-  clientRouter = require('./clientRouter.js').default,
-  port = process.env.PORT || 3005,
-  staticCache  = require("koa-static-cache"),
-  path = require('path'),
-  cors = require('koa2-cors'),
-  Loadable = require('react-loadable');
+const app = require('./app.js').default;
+const clientRouter = require('./clientRouter.js').default;
+const staticCache  = require("koa-static-cache");
+const path = require('path');
+const cors = require('koa2-cors');
+const Loadable = require('react-loadable');
+
+const port = process.env.PORT || 3005;
 
 app.use(cors());
 app.use(clientRouter);
