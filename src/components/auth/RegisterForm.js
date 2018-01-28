@@ -33,6 +33,7 @@ class RegisterForm extends React.Component {
     const { formErrors } = this.props;
 
     return (
+      
       <Form onSubmit={this.onSubmit} loading={auth.loading}>
         {
           formErrors.details && formErrors.details.map(error => (
@@ -53,6 +54,7 @@ class RegisterForm extends React.Component {
             value={data.name}
             onChange={this.onChange}
             placeholder="Name"
+            required
           />
         </Form.Field>
         <Form.Field required>
@@ -64,6 +66,7 @@ class RegisterForm extends React.Component {
             value={data.email}
             onChange={this.onChange}
             placeholder="Email"
+            required
           />
         </Form.Field>
         <Form.Field required>
@@ -75,6 +78,7 @@ class RegisterForm extends React.Component {
             value={data.password}
             onChange={this.onChange}
             placeholder="Password"
+            required
           />
         </Form.Field>
         <Button type="submit" fluid>Submit</Button>
