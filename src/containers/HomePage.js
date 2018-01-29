@@ -18,12 +18,13 @@ class HomePage extends Component {
       <Helmet key="Helmet">
         <title>react koa</title>
       </Helmet>,
-      <SectionHero key="SectionHero" users={this.props.users} />
+      <SectionHero key="SectionHero" users={this.props.users} auth={this.props.auth}/>
     ];
   }
 }
 
 HomePage.propTypes = {
+  auth: PropTypes.object,
   getUsers: PropTypes.func.isRequired,
   users: PropTypes.shape({
     loading: PropTypes.bool,
@@ -33,6 +34,7 @@ HomePage.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
+  auth: state.auth,
   users: state.users
 })
 

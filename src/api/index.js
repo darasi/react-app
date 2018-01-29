@@ -10,7 +10,10 @@ const instance = axios.create({
 const Api = {
   user: {
     getUsers: (filter = null) => instance.get('/users', { params: filter }).then(res => res.data),
-    register: (data = null) => instance.post("/register", data).then(res => res.data)
+    register: (data = null) => instance.post("/register", data).then(res => res.data),
+    login: (data = null) => instance.post("/login", data).then(res => res.data),
+    current_user: (data = null) => instance.post("/current_user", data).then(res => res.data),
+    logout: () => instance.post("/logout").then(res => res.data),
   }
 }
 

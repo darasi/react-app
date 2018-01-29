@@ -4,6 +4,8 @@ import Loading from '../components/Loading';
 import '../assets/css/homePage.scss';
 
 const SectionHero = (props) => {
+  const { isAuth } = props.auth;
+
   if(props.users.loading && !props.users.data.data.length) {
     return <Loading />
   }
@@ -14,7 +16,12 @@ const SectionHero = (props) => {
         <Grid>
           <Responsive as={Grid.Column} minWidth={768} tablet={4} computer={4}>
             <Segment>
-              ქართული
+              {isAuth &&
+                <React.Fragment>
+                  <h2>name: {props.auth.data.name}</h2>
+                  <h2>email: {props.auth.data.email}</h2>
+                </React.Fragment>
+              }
             </Segment>
           </Responsive>
           <Grid.Column mobile={16} tablet={12} computer={12}>

@@ -3,12 +3,11 @@ import { Container, Grid, Segment } from 'semantic-ui-react';
 import RegisterForm from '../components/auth/RegisterForm';
 import '../assets/css/registerPage.scss';
 
-
-class Register extends Component {  
+class Register extends Component {
   componentDidMount() {
     // console.log(this.props);
   }
-  
+
   render() {
     return (
       <section className="root">

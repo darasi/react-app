@@ -21,7 +21,7 @@ const prodConfig={
     path:path.resolve(rootPath,'./dist'),
     publicPath:'/',
     chunkFilename: '[name]-[hash:8].js',
-    libraryTarget: isServer ? 'commonjs2' : 'umd',
+    // libraryTarget: isServer ? 'commonjs2' : 'umd',
   },
   resolve:{
     extensions:[".js",".jsx",".css",".less",".scss",".png",".jpg"],

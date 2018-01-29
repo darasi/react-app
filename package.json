@@ -61,6 +61,7 @@
     "babel-register": "^6.26.0",
     "bpg-web-001-caps": "^1.0.0",
     "history": "^4.7.2",
+    "jwt-decode": "^2.2.0",
     "koa": "^2.4.1",
     "koa-static-cache": "^5.1.1",
     "koa2-cors": "^2.0.5",

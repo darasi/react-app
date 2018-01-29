@@ -1,19 +1,27 @@
 import { hydrate } from 'react-dom';
-import createHistory from 'history/createBrowserHistory'
 import Loadable from 'react-loadable';
+import createHistory from 'history/createMemoryHistory';
 import app from './app/index';
 
+import { getCurrentUser } from './store/actions/auth';
+
 const initialState = window && window.__INITIAL_STATE__;
-const history = createHistory();
+const history = createHistory()
 const { configureStore, createApp } = app;
 const store = configureStore(initialState);
 
+if (localStorage.jwt) store.dispatch(getCurrentUser());
+
 const renderApp = () => {
-  const application = createApp({ store,history });
+  const application = createApp({ store, history });
   hydrate(application, document.getElementById('root'));
 }
 
-window.main = () => Loadable.preloadReady().then(() => renderApp());
+window.main = () => {
+  Loadable.preloadReady().then(() => {
+    renderApp()
+  });
+};
 
 if(process.env.NODE_ENV === 'development') {
   if(module.hot){

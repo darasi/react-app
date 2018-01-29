@@ -13,6 +13,7 @@ class RegisterForm extends React.Component {
       password: ""
     }
   };
+
   componentDidMount() {
     // console.log(this.props);
   }
@@ -33,8 +34,7 @@ class RegisterForm extends React.Component {
     const { formErrors } = this.props;
 
     return (
-      
-      <Form onSubmit={this.onSubmit} loading={auth.loading}>
+      <Form onSubmit={this.onSubmit}>
         {
           formErrors.details && formErrors.details.map(error => (
               <Transition key={error.message}>
@@ -81,7 +81,7 @@ class RegisterForm extends React.Component {
             required
           />
         </Form.Field>
-        <Button type="submit" fluid>Submit</Button>
+        <Button type="submit" fluid loading={auth.registerLoading}>Submit</Button>
       </Form>
     );
   }
