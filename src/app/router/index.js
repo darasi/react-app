@@ -1,15 +1,13 @@
-import React from 'react'
+import React from 'react';
 import { Route } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 import routesConfig from './routes';
-import UserRoute from '../../components/routes/UserRoute';
-import GuestRoute from '../../components/routes/GuestRoute';
 import Header from '../../components/Header';
 import '../../assets/css/header.scss';
 
 const Routers = ({history}) => (
   <ConnectedRouter history={history}>
-    <div>
+    <React.Fragment>
       <Header/>
       {
         routesConfig.map(route => (
@@ -24,7 +22,7 @@ const Routers = ({history}) => (
         )
       }
       <footer>Copyright © 2017 Melon</footer>
-    </div>
+    </React.Fragment>
   </ConnectedRouter>
 )
 

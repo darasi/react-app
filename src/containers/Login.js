@@ -1,9 +1,9 @@
 import React,{ Component } from 'react';
 import { Container, Grid, Segment, Header, Divider } from 'semantic-ui-react';
-import RegisterForm from '../components/auth/RegisterForm';
+import LoginForm from '../components/auth/LoginForm';
 import '../assets/css/registerPage.scss';
 
-class Register extends Component {
+class Login extends Component {
   componentDidMount() {
     // console.log(this.props);
   }
@@ -14,10 +14,10 @@ class Register extends Component {
         <Container fluid>
           <Grid centered>
             <Grid.Column mobile={16} tablet={6} computer={6}>
-              <Header as="h2" textAlign="center">REGISTER</Header>
-              <Divider />
+							<Header as="h2" textAlign="center">LOGIN</Header>
+							<Divider section />
               <Segment>
-                <RegisterForm />
+                <LoginForm />
               </Segment>
             </Grid.Column>
           </Grid>
@@ -27,4 +27,4 @@ class Register extends Component {
   }
 }
 
-export default Register
+export default Login

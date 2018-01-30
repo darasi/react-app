@@ -18,6 +18,10 @@ const LoadableRegister = Loadable({
   loader: () => import(/* webpackChunkName: 'Register' */'../../containers/Register'),
   loading: Loading
 });
+const LoadableLogin = Loadable({
+  loader: () => import(/* webpackChunkName: 'Login' */'../../containers/Login'),
+  loading: Loading
+});
 
 const routesConfig = [{
   path: '/',
@@ -41,6 +45,12 @@ const routesConfig = [{
 }, {
   path: '/register',
   component: LoadableRegister,
+  thunk: () => {},
+  authRoute: false,
+  guestRoute: true
+}, {
+  path: '/login',
+  component: LoadableLogin,
   thunk: () => {},
   authRoute: false,
   guestRoute: true

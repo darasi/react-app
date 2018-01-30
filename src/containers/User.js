@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -9,7 +8,6 @@ import '../assets/css/index.scss';
 class User extends Component {
 
   componentDidMount() {
-    this.props.getUsers({});
     console.log(this.props);
   }
 
@@ -21,20 +19,12 @@ class User extends Component {
 
   render() {
     return (
-      <React.Fragment>
+      <section>
         <Link to='/'>HOME PAGE</Link>
-      </React.Fragment>
+      </section>
     )
   }
 }
-
-User.propTypes = {
-  getUsers: PropTypes.func.isRequired,
-  users: PropTypes.shape({
-    loading: PropTypes.bool,
-    data: PropTypes.arrayOf(PropTypes.object)
-  }).isRequired
-};
 
 const mapStateToProps = (state) => ({
   count: state.counter.count,

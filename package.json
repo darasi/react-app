@@ -64,7 +64,6 @@
     "jwt-decode": "^2.2.0",
     "koa": "^2.4.1",
     "koa-static-cache": "^5.1.1",
-    "koa2-cors": "^2.0.5",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",

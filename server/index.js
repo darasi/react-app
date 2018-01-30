@@ -9,12 +9,10 @@ const app = require('./app.js').default;
 const clientRouter = require('./clientRouter.js').default;
 const staticCache  = require("koa-static-cache");
 const path = require('path');
-const cors = require('koa2-cors');
 const Loadable = require('react-loadable');
 
 const port = process.env.PORT || 3005;
 
-app.use(cors());
 app.use(clientRouter);
 app.use(staticCache (path.resolve(__dirname,'../dist'),{
   maxAge: 365 * 24 * 60 * 60,

@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { NavLink, withRouter } from 'react-router-dom';
 import { Container, Menu, Responsive } from 'semantic-ui-react';
+import * as actions  from '../store/actions/auth';
 
 class Header extends Component {
   componentDidMount() {
@@ -13,7 +17,10 @@ class Header extends Component {
     }
   }
 
+  logout = () => this.props.logout();
+
   render() {
+    const { isAuth } = this.props;
     return (
       <header className="header" id="header">
         <Container fluid>
@@ -25,7 +32,18 @@ class Header extends Component {
               <Responsive as={Menu.Item} minWidth={768}><NavLink to='/' exact>HOME</NavLink></Responsive>
               <Responsive as={Menu.Item} minWidth={768}><NavLink to='/user'>USER</NavLink></Responsive>
               <Responsive as={Menu.Item} minWidth={768}><NavLink to='/thunk'>THUNK</NavLink></Responsive>
-              <Responsive as={Menu.Item} minWidth={768}><NavLink to='/register'>REGISTER</NavLink></Responsive>
+              {isAuth
+                ? <Responsive as={Menu.Item} minWidth={768}><a className="item" onClick={this.logout}>LOGOUT</a></Responsive>
+
+                : <React.Fragment>
+                    <Responsive as={Menu.Item} minWidth={768}>
+                      <NavLink to='/login'>LOGIN</NavLink>
+                    </Responsive>
+                    <Responsive as={Menu.Item} minWidth={768}>
+                      <NavLink to='/register'>REGISTER</NavLink>
+                    </Responsive>
+                  </React.Fragment>
+              }
             </Menu.Menu>
           </Menu>
         </Container>
@@ -35,4 +53,19 @@ class Header extends Component {
 
 }
 
-export default Header;
+Header.propTypes = {
+  isAuth: PropTypes.bool.isRequired,
+  logout: PropTypes.func.isRequired
+};
+
+const mapStateToProps = (state) => ({
+  location: state.router.location,
+  isAuth: state.auth.isAuth
+})
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  logout: actions.logout
+},dispatch)
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(Header)

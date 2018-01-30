@@ -28,7 +28,7 @@ const SectionHero = (props) => {
             <Segment>
             {
               props.users.data.data.map(item => (
-                <Header as='h1' key={ item.id }>{ item.name }</Header>
+                <Header as='h1' key={ item.id }>{ item.name } - { item.email }</Header>
               ))
             }
             </Segment>

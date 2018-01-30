@@ -3,10 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actions  from '../store/actions/home';
 import { Link } from 'react-router-dom';
-import { Route, Switch } from 'react-router-dom';
-
 import Page from '../containers/Page';
-import Header from '../components/Header';
 
 class Home extends Component {
   state = {
@@ -15,7 +12,6 @@ class Home extends Component {
 
   componentDidMount(){
     // this.props.getHomeInfo();
-    console.log(this.props);
   }
 
   componentDidCatch(error, info) {

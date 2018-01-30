@@ -8,7 +8,7 @@ export const register = (params) => async(dispatch) => {
   try {
     const response = await Api.user.register(params);
     const { refreshToken } = response.data;
-    localStorage.jwt = refreshToken;
+    localStorage.setItem('jwt', refreshToken);
     const { data } = decodedUser(refreshToken);
     dispatch(({ type: constants.USER_LOGGED_IN, data }));
   } catch(err) {
@@ -21,7 +21,9 @@ export const login = (params) => async(dispatch) => {
   try {
     const response = await Api.user.login(params);
     const { refreshToken } = response.data;
-    localStorage.jwt = refreshToken;
+    const { accessToken } = response.data;
+    localStorage.setItem('jwt', refreshToken);
+    localStorage.setItem('jwtAccessToken', accessToken);
     setAuthorizationHeader(refreshToken);
     const { data } = decodedUser(refreshToken);
     dispatch(({ type: constants.USER_LOGGED_IN, data }));
@@ -37,16 +39,19 @@ export const getCurrentUser = () => async(dispatch) => {
     dispatch(({ type: constants.USER_LOGGED_IN, data }));
   } catch(err) {
     console.log(err);
+    dispatch(({ type: constants.USER_LOGGED_OUT }));
   }
 }
 
 export const logout = () => async(dispatch) => {
   try {
-    await Api.user.logout();
     localStorage.removeItem("jwt");
+    localStorage.removeItem("jwtAccessToken");
     setAuthorizationHeader();
+    await Api.user.logout();
     dispatch(({ type: constants.USER_LOGGED_OUT }));
   } catch(err) {
     console.log(err);
+    dispatch(({ type: constants.USER_LOGGED_OUT }));
   }
 };

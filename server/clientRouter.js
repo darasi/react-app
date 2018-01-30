@@ -1,21 +1,21 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import createHistory from 'history/createMemoryHistory'
+import createHistory from 'history/createMemoryHistory';
 import { getBundles } from 'react-loadable/webpack';
 import stats from '../dist/react-loadable.json';
 import Helmet from 'react-helmet';
 import { matchPath } from 'react-router-dom';
-
 import { matchRoutes } from 'react-router-config';
 import client from '../src/app/index.js';
 import path from 'path';
-import fs from 'fs'
+import fs from 'fs';
+
 let configureStore = client.configureStore;
 let createApp = client.createApp;
 let routesConfig = client.routesConfig;
 
 const createStore = (configureStore) => {
-  let store = configureStore()
+  let store = configureStore();
   return store;
 }
 
@@ -47,14 +47,11 @@ const getMatch = (routesArray, url) => {
 const makeup = (ctx,store,createApp,html) => {
   let initState = store.getState();
   let history = createHistory({initialEntries:[ctx.req.url]});
-
   let modules=[];
-
   let rootString = renderToString(createApp({store,history,modules}));
-
   let {scripts,styles} = createTags(modules)
-
   const helmet = Helmet.renderStatic();
+
   let renderedHtml = prepHTML(html,{
     html: helmet.htmlAttributes.toString(),
     head: helmet.title.toString() + helmet.meta.toString() + helmet.link.toString(),
@@ -65,7 +62,6 @@ const makeup = (ctx,store,createApp,html) => {
   })
   return renderedHtml;
 }
-
 
 const clientRouter = async(ctx,next) => {
   let html = fs.readFileSync(path.join(path.resolve(__dirname,'../dist'),'index.html'),'utf-8');
