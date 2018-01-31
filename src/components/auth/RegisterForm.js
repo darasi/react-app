@@ -2,7 +2,8 @@ import React from "react";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from "prop-types";
-import { Button, Form, Transition, Label } from "semantic-ui-react";
+import { Button, Form } from "semantic-ui-react";
+import FormErrors from '../FormErrors';
 import * as actions  from '../../store/actions/auth';
 
 class RegisterForm extends React.Component {
@@ -35,16 +36,7 @@ class RegisterForm extends React.Component {
 
     return (
       <Form onSubmit={this.onSubmit}>
-        {
-          formErrors.details && formErrors.details.map(error => (
-              <Transition key={error.message}>
-                <div className="error-message">
-                  <div className="text">{error.message}</div>
-                </div>
-              </Transition>
-            )
-          )
-        }
+        <FormErrors formErrors={formErrors} />
         <Form.Field required>
           <label htmlFor="name">Name</label>
           <input

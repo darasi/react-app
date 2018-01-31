@@ -10,11 +10,15 @@ class LoginForm extends React.Component {
     data: {
       email: "",
       password: ""
-    }
+    },
+    formErrors: {}
   };
 
   componentDidMount() {
-    // console.log(this.props);
+
+  }
+  componentWillReceiveProps(nextProps) {
+    this.setState({ formErrors: nextProps.formErrors });
   }
 
   onChange = e =>
@@ -27,23 +31,24 @@ class LoginForm extends React.Component {
     this.props.login(this.state.data);
   };
 
+  Errors = () => (
+    <React.Fragment>
+      <Transition>
+        <div className="error-message">
+          <div className="text">Invalid credentials</div>
+        </div>
+      </Transition>
+    </React.Fragment>
+  )
+
   render() {
-    const { data } = this.state;
+    const { data, formErrors } = this.state;
     const { auth } = this.props;
-    const { formErrors } = this.props;
+    const { Errors } = this;
 
     return (
       <Form onSubmit={this.onSubmit}>
-        {
-          formErrors.details && formErrors.details.map(error => (
-              <Transition key={error.message}>
-                <div className="error-message">
-                  <div className="text">{error.message}</div>
-                </div>
-              </Transition>
-            )
-          )
-        }
+        {formErrors.code && <Errors />}
         <Form.Field>
           <label htmlFor="email">Email</label>
           <input

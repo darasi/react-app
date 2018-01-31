@@ -30,11 +30,12 @@ class Header extends Component {
             </Menu.Item>
             <Menu.Menu position='right'>
               <Responsive as={Menu.Item} minWidth={768}><NavLink to='/' exact>HOME</NavLink></Responsive>
-              <Responsive as={Menu.Item} minWidth={768}><NavLink to='/user'>USER</NavLink></Responsive>
               <Responsive as={Menu.Item} minWidth={768}><NavLink to='/thunk'>THUNK</NavLink></Responsive>
               {isAuth
-                ? <Responsive as={Menu.Item} minWidth={768}><a className="item" onClick={this.logout}>LOGOUT</a></Responsive>
-
+                ? <React.Fragment>
+                    <Responsive as={Menu.Item} minWidth={768}><NavLink to='/user'>USER</NavLink></Responsive>
+                    <Responsive as={Menu.Item} minWidth={768}><a onClick={this.logout}>LOGOUT</a></Responsive>
+                  </React.Fragment>
                 : <React.Fragment>
                     <Responsive as={Menu.Item} minWidth={768}>
                       <NavLink to='/login'>LOGIN</NavLink>

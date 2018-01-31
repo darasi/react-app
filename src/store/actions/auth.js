@@ -2,7 +2,6 @@ import * as constants from '../constants';
 import Api from '../../api';
 import { setAuthorizationHeader, decodedUser } from "../../utils";
 
-
 export const register = (params) => async(dispatch) => {
   dispatch(({ type: constants.REQUEST_USER_REGISTER }));
   try {

@@ -6,34 +6,31 @@ import * as actions  from '../store/actions/home';
 import '../assets/css/index.scss';
 
 class User extends Component {
-
-  componentDidMount() {
-    console.log(this.props);
+  state = {
+    Model: null
+  };
+  componentWillReceiveProps(nextProps) {
+    if(!nextProps.auth.isAuth) this.props.history.push('/login');
   }
 
-  // handeModelClick() {
-  //   import('./Model.js').then(({ default: Model }) => {
-  //     console.log(Model)
-  //   })
-  // }
+  handleImportModelClick = () => import('./Model').then(Model => this.setState({Model}));
 
   render() {
+    const { Model } = this.state;
+
     return (
-      <section>
+      <section className="root">
         <Link to='/'>HOME PAGE</Link>
+        <button onClick={this.handleImportModelClick}>model</button>
+        {Model && <Model />}
       </section>
     )
   }
 }
 
 const mapStateToProps = (state) => ({
-  count: state.counter.count,
-  users: state.users
+  auth: state.auth
 })
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  add: actions.add,
-  getUsers: actions.getUsers
-},dispatch)
+const mapDispatchToProps = (dispatch) => bindActionCreators({},dispatch)
 
 export default connect(mapStateToProps,mapDispatchToProps)(User)

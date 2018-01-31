@@ -1,11 +1,17 @@
 import React,{ Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import PropTypes from "prop-types";
 import { Container, Grid, Segment, Header, Divider } from 'semantic-ui-react';
 import LoginForm from '../components/auth/LoginForm';
 import '../assets/css/registerPage.scss';
 
 class Login extends Component {
   componentDidMount() {
-    // console.log(this.props);
+    if(this.props.auth.isAuth) this.props.history.push('/');
+  }
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.auth.isAuth) this.props.history.push('/');
   }
 
   render() {
@@ -27,4 +33,14 @@ class Login extends Component {
   }
 }
 
-export default Login
+Login.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth
+})
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({},dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

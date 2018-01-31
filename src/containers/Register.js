@@ -1,11 +1,17 @@
 import React,{ Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import PropTypes from "prop-types";
 import { Container, Grid, Segment, Header, Divider } from 'semantic-ui-react';
 import RegisterForm from '../components/auth/RegisterForm';
 import '../assets/css/registerPage.scss';
 
 class Register extends Component {
   componentDidMount() {
-    // console.log(this.props);
+    if(this.props.auth.isAuth) this.props.history.push('/');
+  }
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.auth.isAuth) this.props.history.push('/');
   }
 
   render() {
@@ -27,4 +33,14 @@ class Register extends Component {
   }
 }
 
-export default Register
+Register.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth
+})
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({},dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register)
