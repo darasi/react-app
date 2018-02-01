@@ -12,11 +12,12 @@ class RegisterForm extends React.Component {
       name: "",
       email: "",
       password: ""
-    }
+    },
+    formErrors: {}
   };
 
-  componentDidMount() {
-    // console.log(this.props);
+  componentWillReceiveProps(nextProps) {
+    this.setState({ formErrors: nextProps.formErrors });
   }
 
   onChange = e =>
@@ -30,9 +31,8 @@ class RegisterForm extends React.Component {
   };
 
   render() {
-    const { data } = this.state;
+    const { data, formErrors } = this.state;
     const { auth } = this.props;
-    const { formErrors } = this.props;
 
     return (
       <Form onSubmit={this.onSubmit}>
@@ -81,8 +81,15 @@ class RegisterForm extends React.Component {
 
 RegisterForm.propTypes = {
   register: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-  formErrors: PropTypes.object.isRequired
+  auth: PropTypes.shape({
+    isAuth: PropTypes.bool,
+    loginLoading: PropTypes.bool,
+    registerLoading: PropTypes.bool,
+    data: PropTypes.object,
+  }).isRequired,
+  formErrors: PropTypes.shape({
+    register: PropTypes.object
+  }).isRequired
 };
 
 const mapStateToProps = (state) => ({

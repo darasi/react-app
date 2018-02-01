@@ -1,11 +1,12 @@
 import { hydrate } from 'react-dom';
-import createHistory from 'history/createBrowserHistory'
+// import createHistory from 'history/createBrowserHistory'
 import Loadable from 'react-loadable';
 import app from './app/index';
 import { getCurrentUser } from './store/actions/auth';
+import { history } from "./utils";
 
 const initialState = window && window.__INITIAL_STATE__;
-const history = createHistory()
+// let history = createHistory()
 let { configureStore, createApp } = app;
 let store = configureStore(initialState)
 

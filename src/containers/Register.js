@@ -8,7 +8,7 @@ import '../assets/css/registerPage.scss';
 
 class Register extends Component {
   componentDidMount() {
-    if(this.props.auth.isAuth) this.props.history.push('/');
+    // if(this.props.auth.isAuth) this.props.history.push('/');
   }
   componentWillReceiveProps(nextProps) {
     if(nextProps.auth.isAuth) this.props.history.push('/');

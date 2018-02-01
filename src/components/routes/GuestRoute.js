@@ -4,14 +4,11 @@ import { connect } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
 
 const GuestRoute = ({ isAuth, component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={props =>
-      !isAuth ? (
-        <Component {...props} />
-      ) : (
-        <Redirect to="/" />
-      )}
+  <Route {...rest} render={props => (
+    isAuth === false
+      ? <Component {...props} />
+      : <Redirect to="/" />
+  )}
   />
 );
 

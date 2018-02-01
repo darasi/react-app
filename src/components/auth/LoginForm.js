@@ -14,9 +14,6 @@ class LoginForm extends React.Component {
     formErrors: {}
   };
 
-  componentDidMount() {
-
-  }
   componentWillReceiveProps(nextProps) {
     this.setState({ formErrors: nextProps.formErrors });
   }
@@ -60,7 +57,7 @@ class LoginForm extends React.Component {
             placeholder="Email"
           />
         </Form.Field>
-        <Form.Field required>
+        <Form.Field>
           <label htmlFor="password">Password</label>
           <input
             id="password"
@@ -79,8 +76,15 @@ class LoginForm extends React.Component {
 
 LoginForm.propTypes = {
   login: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-  formErrors: PropTypes.object.isRequired
+  auth: PropTypes.shape({
+    isAuth: PropTypes.bool,
+    loginLoading: PropTypes.bool,
+    registerLoading: PropTypes.bool,
+    data: PropTypes.object,
+  }).isRequired,
+  formErrors: PropTypes.shape({
+    login: PropTypes.object
+  }).isRequired
 };
 
 const mapStateToProps = (state) => ({

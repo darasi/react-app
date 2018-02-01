@@ -8,7 +8,7 @@ import '../assets/css/registerPage.scss';
 
 class Login extends Component {
   componentDidMount() {
-    if(this.props.auth.isAuth) this.props.history.push('/');
+    // if(this.props.auth.isAuth) this.props.history.push('/');
   }
   componentWillReceiveProps(nextProps) {
     if(nextProps.auth.isAuth) this.props.history.push('/');
@@ -34,7 +34,12 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.shape({
+    isAuth: PropTypes.bool,
+    loginLoading: PropTypes.bool,
+    registerLoading: PropTypes.bool,
+    data: PropTypes.object,
+  }).isRequired
 };
 
 const mapStateToProps = (state) => ({

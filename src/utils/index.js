@@ -1,5 +1,6 @@
 import axios from "axios";
 import jwtDecode from 'jwt-decode';
+import createBrowserHistory from 'history/createBrowserHistory';
 
 export const setAuthorizationHeader =  (token = null) => {
   if (token) {
@@ -10,3 +11,5 @@ export const setAuthorizationHeader =  (token = null) => {
 };
 
 export const decodedUser =  (token = null) => token ? jwtDecode(token) : {};
+
+export const history = createBrowserHistory()

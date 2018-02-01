@@ -3,16 +3,14 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
 
-const UserRoute = ({ isAuth, component: Component, ...rest }) => {
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        isAuth ? <Component {...props} /> : <Redirect to="/login" />
-      }
-    />
-  )
-};
+const UserRoute = ({ isAuth, component: Component, ...rest }) => (
+  <Route {...rest} render={props => (
+    isAuth === true
+      ? <Component {...props} />
+      : <Redirect to="/login" />
+  )}
+  />
+);
 
 UserRoute.propTypes = {
   component: PropTypes.func.isRequired,
