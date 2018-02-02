@@ -1,12 +1,19 @@
+/* eslint-disable */
 import { hydrate } from 'react-dom';
-// import createHistory from 'history/createBrowserHistory'
+import createHistory from 'history/createBrowserHistory'
+import { addLocaleData } from 'react-intl';
+import ka from 'react-intl/locale-data/ka';
+import en from 'react-intl/locale-data/en';
 import Loadable from 'react-loadable';
 import app from './app/index';
 import { getCurrentUser } from './store/actions/auth';
-import { history } from "./utils";
+// import { history } from "./utils";
+
+addLocaleData(ka);
+addLocaleData(en);
 
 const initialState = window && window.__INITIAL_STATE__;
-// let history = createHistory()
+let history = createHistory()
 let { configureStore, createApp } = app;
 let store = configureStore(initialState)
 
