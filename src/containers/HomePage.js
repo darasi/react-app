@@ -24,7 +24,7 @@ class HomePage extends Component {
 }
 
 HomePage.propTypes = {
-  auth: PropTypes.object,
+  auth: PropTypes.object.isRequired,
   getUsers: PropTypes.func.isRequired,
   users: PropTypes.shape({
     loading: PropTypes.bool,

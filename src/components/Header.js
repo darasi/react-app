@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom';
 import { Container, Menu, Responsive, Dropdown, Flag } from 'semantic-ui-react';
 import { FormattedMessage as Tr } from 'react-intl';
 import * as actions  from '../store/actions/auth';
+import * as localeActions  from '../store/actions/locale';
 
 class Header extends Component {
   componentDidMount() {
@@ -53,8 +54,8 @@ class Header extends Component {
                   </React.Fragment>
               }
               <Responsive as={Menu.Item} minWidth={768}>
-              <Dropdown>
-                <Dropdown.Menu text={lang}>
+              <Dropdown text={lang}>
+                <Dropdown.Menu>
                   <Dropdown.Item onClick={() => this.setLocale('ka')}><Flag name="ge" /> Georgian</Dropdown.Item>
                   <Dropdown.Item onClick={() => this.setLocale('en')}><Flag name="us" /> English</Dropdown.Item>
                 </Dropdown.Menu>
@@ -84,7 +85,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   logout: actions.logout,
-  setLocale: actions.setLocale
+  setLocale: localeActions.setLocale
 },dispatch)
 
 

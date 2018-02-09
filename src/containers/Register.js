@@ -34,6 +34,7 @@ class Register extends Component {
 }
 
 Register.propTypes = {
+  history: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired
 };
 

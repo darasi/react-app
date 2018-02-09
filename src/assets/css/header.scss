@@ -33,6 +33,7 @@ header.header {
         font-family: $fontFam;
         font-weight: bold;
         font-size: 1.2rem;
+        text-transform: uppercase;
         border-radius: 20px;
         padding: 5px 10px;
         -webkit-transition: all .3s ease;
@@ -50,6 +51,7 @@ header.header {
         color: $white;
         font-weight: bold;
         font-size: 1.2rem;
+        text-transform: uppercase;
       }
     }
 

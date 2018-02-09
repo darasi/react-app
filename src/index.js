@@ -7,6 +7,7 @@ import en from 'react-intl/locale-data/en';
 import Loadable from 'react-loadable';
 import app from './app/index';
 import { getCurrentUser } from './store/actions/auth';
+import { setLocale } from './store/actions/locale';
 // import { history } from "./utils";
 
 addLocaleData(ka);
@@ -18,6 +19,7 @@ let { configureStore, createApp } = app;
 let store = configureStore(initialState)
 
 if (localStorage.jwt) store.dispatch(getCurrentUser())
+if (localStorage.lang) store.dispatch(setLocale(localStorage.lang))
 
 const renderApp = () => {
   let application = createApp({store,history});

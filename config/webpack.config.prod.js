@@ -7,7 +7,7 @@ const { ReactLoadablePlugin } = require('react-loadable/webpack') ;
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const isServer = process.env.BUILD_TYPE==='server';
+const isServer = process.env.BUILD_TYPE === 'server';
 const rootPath = path.join(__dirname,'../');
 
 const prodConfig={

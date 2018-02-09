@@ -7,7 +7,9 @@ export const register = (params) => async(dispatch) => {
   try {
     const response = await Api.user.register(params);
     const { refreshToken } = response.data;
+    const { accessToken } = response.data;
     localStorage.setItem('jwt', refreshToken);
+    localStorage.setItem('jwtAccessToken', accessToken);
     const { data } = decodedUser(refreshToken);
     dispatch(({ type: constants.USER_LOGGED_IN, data }));
   } catch(err) {
@@ -31,7 +33,25 @@ export const login = (params) => async(dispatch) => {
   }
 }
 
+export const logout = () => async(dispatch) => {
+  try {
+    await Api.user.logout();
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("jwtAccessToken");
+    setAuthorizationHeader();
+    dispatch(({ type: constants.USER_LOGGED_OUT }));
+  } catch(err) {
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("jwtAccessToken");
+    setAuthorizationHeader();
+    dispatch(({ type: constants.USER_LOGGED_OUT }));
+  }
+}
+
 export const getCurrentUser = () => async(dispatch) => {
+  const { exp } = decodedUser(localStorage.jwt);
+  const checkExpDate = exp - parseInt(Date.now() / 1000, 10) <= 0;
+  if(checkExpDate) return dispatch(logout());
   try {
     setAuthorizationHeader(localStorage.jwt);
     const data = await Api.user.current_user();
@@ -39,21 +59,4 @@ export const getCurrentUser = () => async(dispatch) => {
   } catch(err) {
     dispatch(({ type: constants.USER_LOGGED_OUT }));
   }
-}
-
-export const logout = () => async(dispatch) => {
-  try {
-    localStorage.removeItem("jwt");
-    localStorage.removeItem("jwtAccessToken");
-    setAuthorizationHeader();
-    await Api.user.logout();
-    dispatch(({ type: constants.USER_LOGGED_OUT }));
-  } catch(err) {
-    dispatch(({ type: constants.USER_LOGGED_OUT }));
-  }
-};
-
-export const setLocale = (lang) => async(dispatch) => {
-  localStorage.lang = lang;
-  dispatch(({ type: constants.LOCALE_SET, lang }))
 }

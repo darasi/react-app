@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 import { IntlProvider } from 'react-intl';
@@ -7,27 +9,42 @@ import routesConfig from './routes';
 import Header from '../../components/Header';
 import '../../assets/css/header.scss';
 
-const Routers = ({history}) => (
-  <IntlProvider locale="ka" messages={translation['ka']}>
-    <ConnectedRouter history={history}>
-      <React.Fragment>
-        <Header/>
-        {
-          routesConfig.map(route => (
-              <Route
-                key={route.path}
-                exact={route.exact}
-                path={route.path}
-                component={route.component}
-                thunk={route.thunk}
-              />
-            )
-          )
-        }
-        <footer>Copyright © 2017 Melon</footer>
-      </React.Fragment>
-    </ConnectedRouter>
-  </IntlProvider>
-)
+class Routers extends PureComponent {
+  render() {
+    const { lang, history } = this.props;
 
-export default Routers;
+    return (
+      <IntlProvider locale={lang} messages={translation[lang]}>
+        <ConnectedRouter history={history}>
+          <React.Fragment>
+            <Header/>
+            {
+              routesConfig.map(route => (
+                  <Route
+                    key={route.path}
+                    exact={route.exact}
+                    path={route.path}
+                    component={route.component}
+                    thunk={route.thunk}
+                  />
+                )
+              )
+            }
+            <footer>Copyright © 2017 Melon</footer>
+          </React.Fragment>
+        </ConnectedRouter>
+      </IntlProvider>
+    )
+  }
+}
+
+Routers.propTypes = {
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+  lang: PropTypes.string.isRequired
+};
+
+const mapStateToProps = (state) => ({
+  lang: state.locale.lang
+})
+
+export default connect(mapStateToProps,null)(Routers)
