@@ -85,7 +85,7 @@ const prodConfig={
       filename: 'css/style.[hash].css',
       allChunks: true,
     }),
-    new CopyWebpackPlugin([{from:'favicon.ico',to: `${rootPath}./dist`}, {from:'mfest.json',to: `${rootPath}./dist`}]),
+    new CopyWebpackPlugin([{from:'./assets/favicon.ico',to: `${rootPath}./dist`}, {from:'./assets/mfest.json',to: `${rootPath}./dist`}]),
     new CleanWebpackPlugin(['./dist'],{root: rootPath,}),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV':JSON.stringify(process.env.NODE_ENV)
@@ -94,7 +94,11 @@ const prodConfig={
     new HtmlWebpackPlugin({
       title:'',
       filename:'index.html',
-      template:'./index.ejs',
+      template:'./assets/index.ejs',
+      minify: {
+        removeComments: true,
+        collapseInlineTagWhitespace: true,
+      }
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name:['vendors','manifest'],

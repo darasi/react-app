@@ -1,13 +1,21 @@
-import React from 'react';
-import { Container, Grid, Segment, Responsive, Header } from 'semantic-ui-react';
-import Loading from '../components/Loading';
-import '../assets/css/homePage.scss';
+import React from "react";
+import { Container, Grid, Segment, Responsive, Header } from "semantic-ui-react";
+import { userIsAuthenticated } from "../components/hoc/ReduxAuthWrapper";
+import Loading from "../components/Loading";
+import "../assets/css/homePage.scss";
 
-const SectionHero = (props) => {
-  const { isAuth } = props.auth;
+const UserDetails = userIsAuthenticated(({ data }) => (
+  <React.Fragment>
+    <h2>name: {data.name}</h2>
+    <h2>email: {data.email}</h2>
+  </React.Fragment>
+));
 
-  if(props.users.loading && !props.users.data.data.length) {
-    return <Loading />
+const SectionHero = props => {
+  const { auth, users } = props;
+
+  if (users.loading && !users.data.data.length) {
+    return <Loading />;
   }
 
   return (
@@ -16,27 +24,22 @@ const SectionHero = (props) => {
         <Grid>
           <Responsive as={Grid.Column} minWidth={768} tablet={4} computer={4}>
             <Segment>
-              {isAuth &&
-                <React.Fragment>
-                  <h2>name: {props.auth.data.name}</h2>
-                  <h2>email: {props.auth.data.email}</h2>
-                </React.Fragment>
-              }
+              <UserDetails data={auth.data} />
             </Segment>
           </Responsive>
           <Grid.Column mobile={16} tablet={12} computer={12}>
             <Segment>
-            {
-              props.users.data.data.map(item => (
-                <Header as='h1' key={ item.id }>{ item.name } - { item.email }</Header>
-              ))
-            }
+              {users.data.data.map(item => (
+                <Header as="h1" key={item.id}>
+                  {item.name} - {item.email}
+                </Header>
+              ))}
             </Segment>
           </Grid.Column>
         </Grid>
       </Container>
     </section>
-  )
-}
+  );
+};
 
 export default SectionHero;

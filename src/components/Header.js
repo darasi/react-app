@@ -1,92 +1,107 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
-import { Container, Menu, Responsive, Dropdown, Flag } from 'semantic-ui-react';
-import { FormattedMessage as Tr } from 'react-intl';
-import * as actions  from '../store/actions/auth';
-import * as localeActions  from '../store/actions/locale';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { NavLink } from "react-router-dom";
+import { Container, Menu, Responsive, Dropdown, Flag } from "semantic-ui-react";
+import { FormattedMessage as Tr } from "react-intl";
+import * as actions from "../store/actions/auth";
+import * as localeActions from "../store/actions/locale";
+import { userIsAuthenticated, userIsNotAuthenticated } from "../components/hoc/ReduxAuthWrapper";
 
 class Header extends Component {
   componentDidMount() {
     window.onscroll = () => {
-        if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
-          document.getElementById("header").classList.add("fixed");
-        } else {
-          document.getElementById("header").classList.remove('fixed');
-        }
-    }
+      if (
+        document.body.scrollTop > 50 ||
+        document.documentElement.scrollTop > 50
+      ) {
+        document.getElementById("header").classList.add("fixed");
+      } else {
+        document.getElementById("header").classList.remove("fixed");
+      }
+    };
   }
 
-  setLocale = (lang) => this.props.setLocale(lang);
+  setLocale = lang => this.props.setLocale(lang);
 
   logout = () => this.props.logout();
 
   render() {
-    const { isAuth, lang } = this.props;
+    const { lang } = this.props;
+
+    const LoggedInNavLinks = userIsAuthenticated(({ logout }) => (
+      <React.Fragment>
+        <Responsive as={Menu.Item} minWidth={768}>
+          <NavLink to="/user">USER</NavLink>
+        </Responsive>
+        <Responsive as={Menu.Item} minWidth={768}>
+          <a onClick={logout}>LOGOUT</a>
+        </Responsive>
+      </React.Fragment>
+    ));
+
+    const LoggedOutNavLinks = userIsNotAuthenticated(() => (
+      <React.Fragment>
+        <Responsive as={Menu.Item} minWidth={768}>
+          <NavLink to="/login">LOGIN</NavLink>
+        </Responsive>
+        <Responsive as={Menu.Item} minWidth={768}>
+          <NavLink to="/register">REGISTER</NavLink>
+        </Responsive>
+      </React.Fragment>
+    ));
+
     return (
       <header className="header" id="header">
         <Container fluid>
           <Menu secondary className="header-menu">
-            <Menu.Item className="header-logo">
-              LOGO
-            </Menu.Item>
-            <Menu.Menu position='right'>
+            <Menu.Item className="header-logo">LOGO</Menu.Item>
+            <Menu.Menu position="right">
               <Responsive as={Menu.Item} minWidth={768}>
-                <NavLink to='/' exact><Tr id="home" /></NavLink>
+                <NavLink to="/" exact>
+                  <Tr id="home" />
+                </NavLink>
               </Responsive>
               <Responsive as={Menu.Item} minWidth={768}>
-                <NavLink to='/thunk'>THUNK</NavLink>
+                <NavLink to="/thunk">THUNK</NavLink>
               </Responsive>
-              {isAuth
-                ? <React.Fragment>
-                    <Responsive as={Menu.Item} minWidth={768}><NavLink to='/user'>USER</NavLink></Responsive>
-                    <Responsive as={Menu.Item} minWidth={768}><a onClick={this.logout}>LOGOUT</a></Responsive>
-                  </React.Fragment>
-                : <React.Fragment>
-                    <Responsive as={Menu.Item} minWidth={768}>
-                      <NavLink to='/login'>LOGIN</NavLink>
-                    </Responsive>
-                    <Responsive as={Menu.Item} minWidth={768}>
-                      <NavLink to='/register'>REGISTER</NavLink>
-                    </Responsive>
-                  </React.Fragment>
-              }
+              <LoggedInNavLinks logout={this.logout} />
+              <LoggedOutNavLinks />
               <Responsive as={Menu.Item} minWidth={768}>
-              <Dropdown text={lang}>
-                <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => this.setLocale('ka')}><Flag name="ge" /> Georgian</Dropdown.Item>
-                  <Dropdown.Item onClick={() => this.setLocale('en')}><Flag name="us" /> English</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+                <Dropdown text={lang}>
+                  <Dropdown.Menu>
+                    <Dropdown.Item onClick={() => this.setLocale("ka")}>
+                      <Flag name="ge" /> Georgian
+                    </Dropdown.Item>
+                    <Dropdown.Item onClick={() => this.setLocale("en")}>
+                      <Flag name="us" /> English
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
               </Responsive>
             </Menu.Menu>
           </Menu>
         </Container>
-    </header>
+      </header>
     );
   }
-
 }
 
 Header.propTypes = {
-  isAuth: PropTypes.bool.isRequired,
   logout: PropTypes.func.isRequired,
   lang: PropTypes.string.isRequired,
-  setLocale: PropTypes.func.isRequired,
+  setLocale: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   location: state.router.location,
-  isAuth: state.auth.isAuth,
   lang: state.locale.lang
-})
+});
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
+const mapDispatchToProps = dispatch => bindActionCreators({
   logout: actions.logout,
   setLocale: localeActions.setLocale
-},dispatch)
+}, dispatch);
 
-
-export default connect(mapStateToProps,mapDispatchToProps)(Header)
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

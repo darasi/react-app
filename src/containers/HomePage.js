@@ -1,14 +1,12 @@
-import React,{ Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from "react-helmet";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actions  from '../store/actions/users';
-
 import SectionHero from '../components/SectionHero';
 
 class HomePage extends Component {
-
   componentDidMount() {
     this.props.getUsers();
   }
@@ -36,11 +34,10 @@ HomePage.propTypes = {
 const mapStateToProps = (state) => ({
   auth: state.auth,
   users: state.users
-})
+});
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   getUsers: actions.getUsers
-},dispatch)
-
+}, dispatch);
 
 export default connect(mapStateToProps,mapDispatchToProps)(HomePage)

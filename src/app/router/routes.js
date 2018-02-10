@@ -1,6 +1,7 @@
 import Loadable from 'react-loadable';
 import { homeThunk, getUsersThunk } from '../../store/actions/thunk';
 import Loading from '../../components/Loading';
+import { userIsAuthenticatedRedir, userIsNotAuthenticatedRedir } from '../../components/hoc/ReduxAuthWrapper';
 
 const LoadableHomePage = Loadable({
   loader: () => import(/* webpackChunkName: 'HomePage' */'../../containers/HomePage'),
@@ -32,33 +33,23 @@ const routesConfig = [{
   path: '/',
   exact: true,
   component: LoadableHomePage,
-  thunk: getUsersThunk,
-  authRoute: false,
-  guestRoute: false
+  thunk: getUsersThunk
 }, {
   path: '/thunk',
   component: LoadableHome,
   thunk: homeThunk,
-  authRoute: false,
-  guestRoute: false
 }, {
   path: '/user',
-  component: LoadableUser,
-  thunk: getUsersThunk,
-  authRoute: true,
-  guestRoute: false
+  component: userIsAuthenticatedRedir(LoadableUser),
+  thunk: getUsersThunk
 }, {
   path: '/register',
-  component: LoadableRegister,
-  thunk: () => {},
-  authRoute: false,
-  guestRoute: true
+  component: userIsNotAuthenticatedRedir(LoadableRegister),
+  thunk: () => {}
 }, {
   path: '/login',
-  component: LoadableLogin,
-  thunk: () => {},
-  authRoute: false,
-  guestRoute: true
+  component: userIsNotAuthenticatedRedir(LoadableLogin),
+  thunk: () => {}
 }];
 
 export default routesConfig;

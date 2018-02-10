@@ -10,9 +10,6 @@ class Login extends Component {
   componentDidMount() {
     // if(this.props.auth.isAuth) this.props.history.push('/');
   }
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.auth.isAuth) this.props.history.push('/');
-  }
 
   render() {
     return (
@@ -34,18 +31,12 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  auth: PropTypes.shape({
-    isAuth: PropTypes.bool,
-    loginLoading: PropTypes.bool,
-    registerLoading: PropTypes.bool,
-    data: PropTypes.object,
-  }).isRequired
+  auth: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth
-})
+});
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({},dispatch)
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(mapStateToProps)(Login)

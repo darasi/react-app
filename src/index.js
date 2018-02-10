@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { hydrate } from 'react-dom';
+import { hydrate, render } from 'react-dom';
 import createHistory from 'history/createBrowserHistory'
 import { addLocaleData } from 'react-intl';
 import ka from 'react-intl/locale-data/ka';
@@ -23,7 +23,11 @@ if (localStorage.lang) store.dispatch(setLocale(localStorage.lang))
 
 const renderApp = () => {
   let application = createApp({store,history});
-  hydrate(application,document.getElementById('root'));
+  if(process.env.NODE_ENV === 'development') {
+    render(application,document.getElementById('root'));
+  } else {
+    hydrate(application,document.getElementById('root'));
+  }
 }
 
 window.main = () => {

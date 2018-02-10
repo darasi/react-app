@@ -53,6 +53,7 @@ export const getCurrentUser = () => async(dispatch) => {
   const checkExpDate = exp - parseInt(Date.now() / 1000, 10) <= 0;
   if(checkExpDate) return dispatch(logout());
   try {
+    dispatch(({ type: constants.USER_HAS_TOKEN }));
     setAuthorizationHeader(localStorage.jwt);
     const data = await Api.user.current_user();
     dispatch(({ type: constants.USER_LOGGED_IN, data }));

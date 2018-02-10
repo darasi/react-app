@@ -4,6 +4,7 @@ const initialState = {
     isAuth: false,
     registerLoading: false,
     loginLoading: false,
+    isFetching: false,
     data: {}
 };
 
@@ -13,6 +14,8 @@ const auth = (state = initialState, action) => {
       return { ...state, registerLoading: true };
     case constants.REQUEST_USER_REGISTER_FAIL:
       return { ...state, registerLoading: false };
+    case constants.USER_HAS_TOKEN:
+      return { ...state, isFetching: true };
     case constants.REQUEST_USER_LOGIN:
       return { ...state, loginLoading: true };
     case constants.USER_LOGIN_FAIL:
@@ -20,7 +23,7 @@ const auth = (state = initialState, action) => {
     case constants.USER_LOGGED_IN:
       return { ...state, data: action.data, loginLoading: false, registerLoading: false, isAuth: true };
     case constants.USER_LOGGED_OUT:
-      return { ...state, loginLoading:false, isAuth: false, data: {} };
+      return initialState;
     default:
       return state;
   }

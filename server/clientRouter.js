@@ -1,4 +1,4 @@
-import React from 'react';
+/* eslint-disable */
 import { renderToString } from 'react-dom/server';
 import createHistory from 'history/createMemoryHistory';
 import { getBundles } from 'react-loadable/webpack';
@@ -67,9 +67,10 @@ const clientRouter = async(ctx,next) => {
   let html = fs.readFileSync(path.join(path.resolve(__dirname,'../dist'),'index.html'),'utf-8');
   let store = createStore(configureStore);
   let branch = matchRoutes(routesConfig,ctx.req.url)
-  let promises = branch.map(({route,match}) => {
+  let promises = branch.map(({route}) => {
     return route.thunk ? (route.thunk(store)) : Promise.resolve(null)
   });
+  
   await Promise.all(promises).catch(err => console.log('err:---',err))
 
   let isMatch = getMatch(routesConfig,ctx.req.url);
@@ -77,6 +78,7 @@ const clientRouter = async(ctx,next) => {
     let renderedHtml = await makeup(ctx,store,createApp,html);
     ctx.body = renderedHtml;
   }
+
   await next()
 }
 
