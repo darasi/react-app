@@ -1,8 +1,8 @@
-import React from "react";
-import { Container, Grid, Segment, Responsive, Header } from "semantic-ui-react";
-import { userIsAuthenticated } from "../components/hoc/ReduxAuthWrapper";
-import Loading from "../components/Loading";
-import "../assets/css/homePage.scss";
+import React from 'react';
+import { Container, Grid, Segment, Responsive, Header } from 'semantic-ui-react';
+import { userIsAuthenticated } from '../components/hoc/ReduxAuthWrapper';
+import Loading from '../components/Loading';
+import '../assets/css/homePage.scss';
 
 const UserDetails = userIsAuthenticated(({ data }) => (
   <React.Fragment>

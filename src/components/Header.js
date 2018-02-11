@@ -1,24 +1,21 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import { NavLink } from "react-router-dom";
-import { Container, Menu, Responsive, Dropdown, Flag } from "semantic-ui-react";
-import { FormattedMessage as Tr } from "react-intl";
-import * as actions from "../store/actions/auth";
-import * as localeActions from "../store/actions/locale";
-import { userIsAuthenticated, userIsNotAuthenticated } from "../components/hoc/ReduxAuthWrapper";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import { Container, Menu, Responsive, Dropdown, Flag } from 'semantic-ui-react';
+import { FormattedMessage as Tr } from 'react-intl';
+import * as actions from '../store/actions/auth';
+import * as localeActions from '../store/actions/locale';
+import { userIsAuthenticated, userIsNotAuthenticated } from '../components/hoc/ReduxAuthWrapper';
 
 class Header extends Component {
   componentDidMount() {
     window.onscroll = () => {
-      if (
-        document.body.scrollTop > 50 ||
-        document.documentElement.scrollTop > 50
-      ) {
-        document.getElementById("header").classList.add("fixed");
+      if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+        document.getElementById('header').classList.add('fixed');
       } else {
-        document.getElementById("header").classList.remove("fixed");
+        document.getElementById('header').classList.remove('fixed');
       }
     };
   }
@@ -71,10 +68,10 @@ class Header extends Component {
               <Responsive as={Menu.Item} minWidth={768}>
                 <Dropdown text={lang}>
                   <Dropdown.Menu>
-                    <Dropdown.Item onClick={() => this.setLocale("ka")}>
+                    <Dropdown.Item onClick={() => this.setLocale('ka')}>
                       <Flag name="ge" /> Georgian
                     </Dropdown.Item>
-                    <Dropdown.Item onClick={() => this.setLocale("en")}>
+                    <Dropdown.Item onClick={() => this.setLocale('en')}>
                       <Flag name="us" /> English
                     </Dropdown.Item>
                   </Dropdown.Menu>

@@ -1,13 +1,13 @@
-import React, { PureComponent } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { Route } from "react-router-dom";
-import { ConnectedRouter } from "react-router-redux";
-import { IntlProvider } from "react-intl";
-import translation from "../../translation";
-import routesConfig from "./routes";
-import Header from "../../components/Header";
-import "../../assets/css/header.scss";
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Route } from 'react-router-dom';
+import { ConnectedRouter } from 'react-router-redux';
+import { IntlProvider } from 'react-intl';
+import translation from '../../translation';
+import routesConfig from './routes';
+import Header from '../../components/Header';
+import '../../assets/css/header.scss';
 
 class Routers extends PureComponent {
   render() {

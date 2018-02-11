@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Helmet } from "react-helmet";
+import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actions  from '../store/actions/users';
+import * as actions from '../store/actions/users';
 import SectionHero from '../components/SectionHero';
 
-class HomePage extends Component {
+class HomePage extends Component { 
   componentDidMount() {
     this.props.getUsers();
   }
@@ -16,7 +16,7 @@ class HomePage extends Component {
       <Helmet key="Helmet">
         <title>react koa</title>
       </Helmet>,
-      <SectionHero key="SectionHero" users={this.props.users} auth={this.props.auth}/>
+      <SectionHero key="SectionHero" users={this.props.users} auth={this.props.auth} />
     ];
   }
 }
@@ -31,13 +31,13 @@ HomePage.propTypes = {
   }).isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   auth: state.auth,
   users: state.users
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
+const mapDispatchToProps = dispatch => bindActionCreators({
   getUsers: actions.getUsers
 }, dispatch);
 
-export default connect(mapStateToProps,mapDispatchToProps)(HomePage)
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

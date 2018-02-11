@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import PropTypes from "prop-types";
-import { Button, Form, Transition } from "semantic-ui-react";
-import * as actions  from '../../store/actions/auth';
+import PropTypes from 'prop-types';
+import { Button, Form, Transition } from 'semantic-ui-react';
+import * as actions from '../../store/actions/auth';
 
 class LoginForm extends React.Component {
   state = {
     data: {
-      email: "",
-      password: ""
+      email: '',
+      password: ''
     },
     formErrors: {}
   };
@@ -36,7 +36,7 @@ class LoginForm extends React.Component {
         </div>
       </Transition>
     </React.Fragment>
-  )
+  );
 
   render() {
     const { data, formErrors } = this.state;
@@ -68,7 +68,9 @@ class LoginForm extends React.Component {
             placeholder="Password"
           />
         </Form.Field>
-        <Button type="submit" fluid loading={auth.loginLoading}>LOGIN</Button>
+        <Button type="submit" fluid loading={auth.loginLoading}>
+          LOGIN
+        </Button>
       </Form>
     );
   }
@@ -80,20 +82,20 @@ LoginForm.propTypes = {
     isAuth: PropTypes.bool,
     loginLoading: PropTypes.bool,
     registerLoading: PropTypes.bool,
-    data: PropTypes.object,
+    data: PropTypes.object
   }).isRequired,
   formErrors: PropTypes.shape({
     login: PropTypes.object
   }).isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   auth: state.auth,
-  formErrors: state.formErrors.login,
-})
+  formErrors: state.formErrors.login
+});
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  login: actions.login,
-},dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({
+  login: actions.login
+}, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

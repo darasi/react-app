@@ -1,17 +1,17 @@
-import React from "react";
+import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import PropTypes from "prop-types";
-import { Button, Form } from "semantic-ui-react";
+import PropTypes from 'prop-types';
+import { Button, Form } from 'semantic-ui-react';
 import FormErrors from '../FormErrors';
-import * as actions  from '../../store/actions/auth';
+import * as actions from '../../store/actions/auth';
 
 class RegisterForm extends React.Component {
   state = {
     data: {
-      name: "",
-      email: "",
-      password: ""
+      name: '',
+      email: '',
+      password: ''
     },
     formErrors: {}
   };
@@ -73,7 +73,9 @@ class RegisterForm extends React.Component {
             required
           />
         </Form.Field>
-        <Button type="submit" fluid loading={auth.registerLoading}>Submit</Button>
+        <Button type="submit" fluid loading={auth.registerLoading}>
+          Submit
+        </Button>
       </Form>
     );
   }
@@ -85,20 +87,20 @@ RegisterForm.propTypes = {
     isAuth: PropTypes.bool,
     loginLoading: PropTypes.bool,
     registerLoading: PropTypes.bool,
-    data: PropTypes.object,
+    data: PropTypes.object
   }).isRequired,
   formErrors: PropTypes.shape({
     register: PropTypes.object
   }).isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   auth: state.auth,
-  formErrors: state.formErrors.register,
-})
+  formErrors: state.formErrors.register
+});
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  register: actions.register,
-},dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({
+  register: actions.register
+}, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm)
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);

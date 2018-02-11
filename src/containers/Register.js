@@ -1,7 +1,7 @@
-import React,{ Component } from 'react';
+import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 import { Container, Grid, Segment, Header, Divider } from 'semantic-ui-react';
 import RegisterForm from '../components/auth/RegisterForm';
 import '../assets/css/registerPage.scss';
@@ -17,7 +17,9 @@ class Register extends Component {
         <Container fluid>
           <Grid centered>
             <Grid.Column mobile={16} tablet={6} computer={6}>
-              <Header as="h2" textAlign="center">REGISTER</Header>
+              <Header as="h2" textAlign="center">
+                REGISTER
+              </Header>
               <Divider />
               <Segment>
                 <RegisterForm />
@@ -26,7 +28,7 @@ class Register extends Component {
           </Grid>
         </Container>
       </section>
-    )
+    );
   }
 }
 
@@ -35,10 +37,10 @@ Register.propTypes = {
   auth: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   auth: state.auth
-})
+});
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({},dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Register)
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

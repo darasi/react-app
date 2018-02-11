@@ -1,7 +1,7 @@
-import React,{ Component } from 'react';
+import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 import { Container, Grid, Segment, Header, Divider } from 'semantic-ui-react';
 import LoginForm from '../components/auth/LoginForm';
 import '../assets/css/registerPage.scss';
@@ -17,8 +17,10 @@ class Login extends Component {
         <Container fluid>
           <Grid centered>
             <Grid.Column mobile={16} tablet={6} computer={6}>
-							<Header as="h2" textAlign="center">LOGIN</Header>
-							<Divider section />
+              <Header as="h2" textAlign="center">
+                LOGIN
+              </Header>
+              <Divider section />
               <Segment>
                 <LoginForm />
               </Segment>
@@ -26,7 +28,7 @@ class Login extends Component {
           </Grid>
         </Container>
       </section>
-    )
+    );
   }
 }
 
@@ -35,8 +37,8 @@ Login.propTypes = {
   history: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps)(Login)
+export default connect(mapStateToProps)(Login);
