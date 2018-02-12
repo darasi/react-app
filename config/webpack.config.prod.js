@@ -6,6 +6,7 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const { ReactLoadablePlugin } = require('react-loadable/webpack') ;
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 
 const isServer = process.env.BUILD_TYPE === 'server';
 const rootPath = path.join(__dirname,'../');
@@ -97,8 +98,13 @@ const prodConfig={
       template:'./assets/index.ejs',
       minify: {
         removeComments: true,
-        collapseInlineTagWhitespace: true,
-      }
+        collapseWhitespace: true,
+        useShortDoctype: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true,
+      },
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name:['vendors','manifest'],
@@ -106,6 +112,19 @@ const prodConfig={
     }),
     new ReactLoadablePlugin({
       filename: path.join(rootPath,'./dist/react-loadable.json'),
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      output: {
+        comments: false
+      }
+    }),
+    new SWPrecacheWebpackPlugin({
+      cacheId: 'cacheId',
+      dontCacheBustUrlsMatching: /\.\w{8}\./,
+      filename: 'service-worker.js',
+      minify: true,
+      navigateFallback: '/',
+      staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
     }),
   ]
 }
