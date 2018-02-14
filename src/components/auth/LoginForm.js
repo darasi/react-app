@@ -42,6 +42,7 @@ class LoginForm extends React.Component {
     const { data, formErrors } = this.state;
     const { auth } = this.props;
     const { Errors } = this;
+    const isButtonDisabled = !data.email || !data.password;
 
     return (
       <Form onSubmit={this.onSubmit}>
@@ -68,7 +69,7 @@ class LoginForm extends React.Component {
             placeholder="Password"
           />
         </Form.Field>
-        <Button type="submit" fluid loading={auth.loginLoading}>
+        <Button type="submit" disabled={isButtonDisabled} fluid loading={auth.loginLoading}>
           LOGIN
         </Button>
       </Form>

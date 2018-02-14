@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Container, Grid, Segment, Responsive, Header } from 'semantic-ui-react';
 import { userIsAuthenticated } from '../components/hoc/ReduxAuthWrapper';
 import Loading from '../components/Loading';
@@ -8,6 +9,7 @@ const UserDetails = userIsAuthenticated(({ data }) => (
   <React.Fragment>
     <h2>name: {data.name}</h2>
     <h2>email: {data.email}</h2>
+    <h2>fb_id: {data.fb_id}</h2>
   </React.Fragment>
 ));
 
@@ -40,6 +42,11 @@ const SectionHero = props => {
       </Container>
     </section>
   );
+};
+
+SectionHero.propTypes = {
+  auth: PropTypes.object.isRequired,
+  users: PropTypes.object.isRequired,
 };
 
 export default SectionHero;

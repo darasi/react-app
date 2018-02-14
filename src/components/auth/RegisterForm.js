@@ -11,9 +11,9 @@ class RegisterForm extends React.Component {
     data: {
       name: '',
       email: '',
-      password: ''
+      password: '',
     },
-    formErrors: {}
+    formErrors: {},
   };
 
   componentWillReceiveProps(nextProps) {
@@ -22,7 +22,7 @@ class RegisterForm extends React.Component {
 
   onChange = e =>
     this.setState({
-      data: { ...this.state.data, [e.target.name]: e.target.value }
+      data: { ...this.state.data, [e.target.name]: e.target.value },
     });
 
   onSubmit = e => {
@@ -33,6 +33,7 @@ class RegisterForm extends React.Component {
   render() {
     const { data, formErrors } = this.state;
     const { auth } = this.props;
+    const isButtonDisabled = !data.name || !data.email || !data.password;
 
     return (
       <Form onSubmit={this.onSubmit}>
@@ -73,7 +74,7 @@ class RegisterForm extends React.Component {
             required
           />
         </Form.Field>
-        <Button type="submit" fluid loading={auth.registerLoading}>
+        <Button type="submit" disabled={isButtonDisabled} fluid loading={auth.registerLoading}>
           Submit
         </Button>
       </Form>
@@ -87,20 +88,24 @@ RegisterForm.propTypes = {
     isAuth: PropTypes.bool,
     loginLoading: PropTypes.bool,
     registerLoading: PropTypes.bool,
-    data: PropTypes.object
+    data: PropTypes.object,
   }).isRequired,
   formErrors: PropTypes.shape({
-    register: PropTypes.object
-  }).isRequired
+    register: PropTypes.object,
+  }).isRequired,
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  formErrors: state.formErrors.register
+  formErrors: state.formErrors.register,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  register: actions.register
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      register: actions.register,
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);

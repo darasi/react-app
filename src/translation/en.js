@@ -1,3 +1,4 @@
 export default {
-    "home": "Home"
+    "home": "Home",
+    'Page not found': 'Page not found'
 }

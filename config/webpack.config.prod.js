@@ -113,11 +113,6 @@ const prodConfig={
     new ReactLoadablePlugin({
       filename: path.join(rootPath,'./dist/react-loadable.json'),
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      output: {
-        comments: false
-      }
-    }),
     new SWPrecacheWebpackPlugin({
       cacheId: 'cacheId',
       dontCacheBustUrlsMatching: /\.\w{8}\./,

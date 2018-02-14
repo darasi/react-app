@@ -1,3 +1,4 @@
 export default {
-    "home": "მთავარი"
+    'home': 'მთავარი',
+    'Page not found': 'გვერდი ვერ მოიძებნა'
 }

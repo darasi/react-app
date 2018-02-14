@@ -53,7 +53,3 @@ const routesConfig = [{
 }];
 
 export default routesConfig;
-
-
-
-

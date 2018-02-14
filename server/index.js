@@ -7,7 +7,7 @@ require('babel-register')({
 
 const path = require('path');
 
-const envPath = process.env.NODE_ENV === 'production' ? path.resolve(process.cwd(), '.env') : path.resolve(process.cwd(), '.env.development');
+const envPath = process.env.NODE_ENV === 'production' ? path.resolve(process.cwd(), '.env') : path.resolve(process.cwd(), '.dev.env');
 require('dotenv').config({path: envPath});
 
 const app = require('./app.js').default;
