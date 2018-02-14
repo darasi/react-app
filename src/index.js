@@ -1,46 +1,70 @@
-import { hydrate } from 'react-dom';
-import createHistory from 'history/createBrowserHistory'
+/* eslint-disable */
+import { hydrate, render } from 'react-dom';
+import createHistory from 'history/createBrowserHistory';
+import { addLocaleData } from 'react-intl';
+import ka from 'react-intl/locale-data/ka';
+import en from 'react-intl/locale-data/en';
 import Loadable from 'react-loadable';
 import app from './app/index';
+import { getCurrentUser } from './store/actions/auth';
+import { setLocale } from './store/actions/locale';
+
+addLocaleData(ka);
+addLocaleData(en);
 
 const initialState = window && window.__INITIAL_STATE__;
-const history = createHistory();
-const { configureStore, createApp } = app;
-const store = configureStore(initialState);
+let history = createHistory();
+let { configureStore, createApp } = app;
+let store = configureStore(initialState);
+
+if (localStorage.jwt) store.dispatch(getCurrentUser());
+if (localStorage.lang) store.dispatch(setLocale(localStorage.lang));
 
 const renderApp = () => {
-  const application = createApp({ store,history });
-  hydrate(application, document.getElementById('root'));
-}
+  let application = createApp({ store, history });
+  if (process.env.NODE_ENV === 'development') {
+    render(application, document.getElementById('root'));
+  } else {
+    hydrate(application, document.getElementById('root'));
+  }
+};
 
-window.main = () => Loadable.preloadReady().then(() => renderApp());
+window.main = () => {
+  Loadable.preloadReady().then(() => {
+    renderApp();
+  });
+  if (process.env.NODE_ENV === 'production') {
+    (function() {
+      if('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js');
+      }
+    })();
+  }
+};
 
-if(process.env.NODE_ENV === 'development') {
-  if(module.hot){
-    module.hot.accept('./store/reducers/index.js',() => {
-      // const newReducer = require('./store/reducers/index.js');
-      // store.replaceReducer(newReducer)
-      import('./store/reducers/index.js').then(({default:module})=>{
-        store.replaceReducer(module)
-      })
-    })
-    module.hot.accept('./app/index.js',() => {
-      let { createApp } = require('./app/index.js');
-      const newReducer = require('./store/reducers/index.js');
+if (process.env.NODE_ENV === 'development') {
+  if (module.hot) {
+    module.hot.accept('./store/reducers/index.js', () => {
+      let newReducer = require('./store/reducers/index.js');
       store.replaceReducer(newReducer);
-      let application = createApp({ store,history });
-      hydrate(application,document.getElementById('root'));
-
-        // let {createApp}=module;
-        // import('./store/reducers/index.js').then(({default:module})=>{
-          // store.replaceReducer(module);
-          // renderApp();
-          // let application=createApp({store,history});
-          // render(application,document.getElementById('root'));
-        // })
-    })
+      // import('./store/reducers/index').then(({default:module})=>{
+      //   store.replaceReducer(module)
+      // })
+    });
+    module.hot.accept('./app/index.js', () => {
+      let { createApp } = require('./app/index.js');
+      let newReducer = require('./store/reducers/index.js');
+      store.replaceReducer(newReducer);
+      let application = createApp({ store, history });
+      hydrate(application, document.getElementById('root'));
+      /*import('./app/index.js').then(({default:module})=>{
+        let {createApp}=module;
+        import('./store/reducers/index.js').then(({default:module})=>{
+          store.replaceReducer(module)
+          let application=createApp({store,history});
+          render(application,document.getElementById('root'));
+        })
+      })*/
+    });
   }
 }
-
-
-

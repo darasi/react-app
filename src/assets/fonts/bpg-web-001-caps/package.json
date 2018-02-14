@@ -1,0 +1,62 @@
+{
+  "_from": "bpg-web-001-caps@^1.0.0",
+  "_id": "bpg-web-001-caps@1.0.0",
+  "_inBundle": false,
+  "_integrity": "sha1-g70EVDRYsqgSTLz+Q+mUjfrCSI4=",
+  "_location": "/bpg-web-001-caps",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "bpg-web-001-caps@^1.0.0",
+    "name": "bpg-web-001-caps",
+    "escapedName": "bpg-web-001-caps",
+    "rawSpec": "^1.0.0",
+    "saveSpec": null,
+    "fetchSpec": "^1.0.0"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/bpg-web-001-caps/-/bpg-web-001-caps-1.0.0.tgz",
+  "_shasum": "83bd04543458b2a8124cbcfe43e9948dfac2488e",
+  "_spec": "bpg-web-001-caps@^1.0.0",
+  "_where": "C:\\Test projects\\react-koa\\react-app",
+  "author": {
+    "name": "Lado Lomidze",
+    "email": "lado.lomidze@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/web-fonts/bpg-web-001-caps/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "BPG WEB 001 Caps Web-Font Package",
+  "homepage": "https://github.com/web-fonts/bpg-web-001-caps",
+  "keywords": [
+    "ttf",
+    "woff",
+    "woff2",
+    "svg",
+    "font",
+    "web-font",
+    "bpg-web-001-caps"
+  ],
+  "licenses": [
+    {
+      "type": "CC-BY-NC-ND 4.0",
+      "url": "http://creativecommons.org/licenses/by-nc-nd/4.0/"
+    },
+    {
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  ],
+  "main": "css/bpg-web-001-caps.css",
+  "name": "bpg-web-001-caps",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/web-fonts/bpg-web-001-caps.git"
+  },
+  "version": "1.0.0"
+}

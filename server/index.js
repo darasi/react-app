@@ -5,22 +5,26 @@ require('babel-register')({
   plugins: ["react-loadable/babel",'syntax-dynamic-import',"dynamic-import-node"]
 });
 
-const app = require('./app.js').default,
-  clientRouter = require('./clientRouter.js').default,
-  port = process.env.PORT || 3005,
-  staticCache  = require("koa-static-cache"),
-  path = require('path'),
-  cors = require('koa2-cors'),
-  Loadable = require('react-loadable');
+const path = require('path');
 
-app.use(cors());
+const envPath = process.env.NODE_ENV === 'production' ? path.resolve(process.cwd(), '.env') : path.resolve(process.cwd(), '.dev.env');
+require('dotenv').config({path: envPath});
+
+const app = require('./app.js').default;
+const clientRouter = require('./clientRouter.js').default;
+const staticCache  = require("koa-static-cache");
+const Loadable = require('react-loadable');
+
+const host = process.env.APP_HOST || 'http://localhost';
+const port = parseInt(process.env.APP_PORT, 10) || 3005;
+
 app.use(clientRouter);
 app.use(staticCache (path.resolve(__dirname,'../dist'),{
   maxAge: 365 * 24 * 60 * 60,
   gzip: true
 }));
 
-console.log(`\n==> 🌎  Listening on port ${port}. Open up http://localhost:${port}/ in your browser.\n`)
+console.log(`\n==> 🌎  Listening on port ${port}. Open up ${host}:${port}/ in your browser.\n`)
 Loadable.preloadAll().then(() => {
   app.listen(port)
 })

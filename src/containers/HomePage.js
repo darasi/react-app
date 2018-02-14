@@ -1,24 +1,14 @@
-import React,{ Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Helmet } from "react-helmet";
+import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actions  from '../store/actions/home';
-
-
+import * as actions from '../store/actions/users';
 import SectionHero from '../components/SectionHero';
 
-class HomePage extends Component {
-
-  state = {
-    filter: {
-      offset: 0,
-      limit: 10
-    }
-  }
-
+class HomePage extends Component { 
   componentDidMount() {
-    // this.props.getPosts(this.state.filter);
+    this.props.getUsers();
   }
 
   render() {
@@ -26,25 +16,28 @@ class HomePage extends Component {
       <Helmet key="Helmet">
         <title>react koa</title>
       </Helmet>,
-      <SectionHero key="SectionHero" posts={this.props.posts} />
+      <SectionHero key="SectionHero" users={this.props.users} auth={this.props.auth} />
     ];
   }
 }
 
-const mapStateToProps = (state) => ({
-  posts: state.posts
-})
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getPosts: actions.getPosts
-},dispatch)
-
 HomePage.propTypes = {
-  getPosts: PropTypes.func.isRequired,
-  posts: PropTypes.shape({
+  auth: PropTypes.object.isRequired,
+  getUsers: PropTypes.func.isRequired,
+  users: PropTypes.shape({
     loading: PropTypes.bool,
-    data: PropTypes.arrayOf(PropTypes.object)
+    errors: PropTypes.object,
+    data: PropTypes.object
   }).isRequired
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(HomePage)
+const mapStateToProps = state => ({
+  auth: state.auth,
+  users: state.users
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  getUsers: actions.getUsers
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
