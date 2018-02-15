@@ -1,16 +1,19 @@
-import { routerReducer } from 'react-router-redux';
 import { combineReducers } from 'redux';
-import {
-  auth,
-  counter,
-  homeInfo,
-  posts
-} from './home';
+import { routerReducer } from 'react-router-redux';
+import { counter, homeInfo } from './home';
+import users from './users';
+import auth from './auth';
+import locale from './locale';
+import { formErrors } from './formErrors';
+import checkout from './checkout';
 
 export default combineReducers({
   router: routerReducer,
   auth,
+  locale,
   counter,
   homeInfo,
-  posts
+  users,
+  formErrors,
+  checkout
 })

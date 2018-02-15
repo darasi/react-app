@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 const rootPath = path.join(__dirname,'../')
 const devConfig = {
@@ -81,13 +82,13 @@ const devConfig = {
   },
   plugins:[
     new webpack.NoEmitOnErrorsPlugin(),
-    new CopyWebpackPlugin([{from:'favicon.ico'},{from:'mfest.json'}]),
+    new CopyWebpackPlugin([{from:'./assets/favicon.ico'},{from:'./assets/mfest.json'}]),
     new webpack.HotModuleReplacementPlugin(),
     new ProgressBarPlugin({summary: false}),
     new ExtractTextPlugin({filename: 'style.[hash].css',}),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV':JSON.stringify(process.env.NODE_ENV||'development')
-    }),
+    // new webpack.DefinePlugin({
+    //   'process.env.NODE_ENV':JSON.stringify(process.env.NODE_ENV || 'development')
+    // }),
     new webpack.optimize.CommonsChunkPlugin({
       name:['vendors','manifest'],
       minChunks:2
@@ -95,8 +96,9 @@ const devConfig = {
     new HtmlWebpackPlugin({
       title:'',
       filename:'index.html',
-      template:'./index.ejs',
+      template:'./assets/index.ejs',
     }),
+    new Dotenv({ path: './.dev.env' })
   ],
 }
 

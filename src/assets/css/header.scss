@@ -1,7 +1,7 @@
 @import 'variables';
 
 header.header {
-  position: relative;
+  position: fixed;
   top: 0;
   z-index: 90;
   left: 0;
@@ -25,24 +25,33 @@ header.header {
 
     .item {
       display: inline-block;
-    }
-    .item a {
-      cursor: pointer;
-      opacity: .95;
-      color: $white;
-      font-family: $fontFam;
-      font-weight: bold;
-      font-size: 1.2rem;
-      border-radius: 20px;
-      padding: 5px 10px;
-      -webkit-transition: all .3s ease;
-      -moz-transition: all .3s ease;
-      -o-transition: all .3s ease;
-      transition: all .3s ease;
 
-      &:hover, &.active {
-        background: $white;
-        color: #bf095d !important
+      a {
+        cursor: pointer;
+        opacity: .95;
+        color: $white;
+        font-family: $fontFam;
+        font-weight: bold;
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        border-radius: 20px;
+        padding: 5px 10px;
+        -webkit-transition: all .3s ease;
+        -moz-transition: all .3s ease;
+        -o-transition: all .3s ease;
+        transition: all .3s ease;
+
+        &:hover, &.active {
+          background: $white;
+          color: #bf095d !important
+        }
+      }
+
+      .dropdown {
+        color: $white;
+        font-weight: bold;
+        font-size: 1.2rem;
+        text-transform: uppercase;
       }
     }
 

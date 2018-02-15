@@ -6,8 +6,9 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const { ReactLoadablePlugin } = require('react-loadable/webpack') ;
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 
-const isServer = process.env.BUILD_TYPE==='server';
+const isServer = process.env.BUILD_TYPE === 'server';
 const rootPath = path.join(__dirname,'../');
 
 const prodConfig={
@@ -21,7 +22,7 @@ const prodConfig={
     path:path.resolve(rootPath,'./dist'),
     publicPath:'/',
     chunkFilename: '[name]-[hash:8].js',
-    libraryTarget: isServer ? 'commonjs2' : 'umd',
+    /* libraryTarget: isServer ? 'commonjs2' : 'umd', */
   },
   resolve:{
     extensions:[".js",".jsx",".css",".less",".scss",".png",".jpg"],
@@ -85,7 +86,7 @@ const prodConfig={
       filename: 'css/style.[hash].css',
       allChunks: true,
     }),
-    new CopyWebpackPlugin([{from:'favicon.ico',to: `${rootPath}./dist`}, {from:'mfest.json',to: `${rootPath}./dist`}]),
+    new CopyWebpackPlugin([{from:'./assets/favicon.ico',to: `${rootPath}./dist`}, {from:'./assets/mfest.json',to: `${rootPath}./dist`}]),
     new CleanWebpackPlugin(['./dist'],{root: rootPath,}),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV':JSON.stringify(process.env.NODE_ENV)
@@ -94,7 +95,16 @@ const prodConfig={
     new HtmlWebpackPlugin({
       title:'',
       filename:'index.html',
-      template:'./index.ejs',
+      template:'./assets/index.ejs',
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        useShortDoctype: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true,
+      },
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name:['vendors','manifest'],
@@ -102,6 +112,14 @@ const prodConfig={
     }),
     new ReactLoadablePlugin({
       filename: path.join(rootPath,'./dist/react-loadable.json'),
+    }),
+    new SWPrecacheWebpackPlugin({
+      cacheId: 'cacheId',
+      dontCacheBustUrlsMatching: /\.\w{8}\./,
+      filename: 'service-worker.js',
+      minify: true,
+      navigateFallback: '/',
+      staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
     }),
   ]
 }

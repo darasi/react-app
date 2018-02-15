@@ -6,4 +6,4 @@ export default {
   configureStore,
   createApp,
   routesConfig
-}
+};
