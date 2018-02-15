@@ -24,7 +24,8 @@ app.use(staticCache (path.resolve(__dirname,'../dist'),{
   gzip: true
 }));
 
-console.log(`\n==> 🌎  Listening on port ${port}. Open up ${host}:${port}/ in your browser.\n`)
+console.log(`\n==> 🌎  Listening on port ${port}. Open up ${host}:${port}/ in your browser.\n`);
+console.log('NODE_ENV: ',process.env.NODE_ENV);
 Loadable.preloadAll().then(() => {
   app.listen(port)
 })

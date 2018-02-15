@@ -89,7 +89,7 @@ const prodConfig={
     new CopyWebpackPlugin([{from:'./assets/favicon.ico',to: `${rootPath}./dist`}, {from:'./assets/mfest.json',to: `${rootPath}./dist`}]),
     new CleanWebpackPlugin(['./dist'],{root: rootPath,}),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV':JSON.stringify(process.env.NODE_ENV)
+      'process.env.NODE_ENV':JSON.stringify(process.env.NODE_ENV || 'production')
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new HtmlWebpackPlugin({
@@ -119,7 +119,7 @@ const prodConfig={
       filename: 'service-worker.js',
       minify: true,
       navigateFallback: '/',
-      staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
+      staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/, /.*\.html/],
     }),
   ]
 }
