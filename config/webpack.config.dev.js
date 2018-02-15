@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 const rootPath = path.join(__dirname,'../')
 const devConfig = {
@@ -85,9 +86,9 @@ const devConfig = {
     new webpack.HotModuleReplacementPlugin(),
     new ProgressBarPlugin({summary: false}),
     new ExtractTextPlugin({filename: 'style.[hash].css',}),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV':JSON.stringify(process.env.NODE_ENV || 'development')
-    }),
+    // new webpack.DefinePlugin({
+    //   'process.env.NODE_ENV':JSON.stringify(process.env.NODE_ENV || 'development')
+    // }),
     new webpack.optimize.CommonsChunkPlugin({
       name:['vendors','manifest'],
       minChunks:2
@@ -97,6 +98,7 @@ const devConfig = {
       filename:'index.html',
       template:'./assets/index.ejs',
     }),
+    new Dotenv({ path: './.dev.env' })
   ],
 }
 

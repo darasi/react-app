@@ -1,8 +1,11 @@
 import axios from 'axios';
 
-export const apiUrl = 'http://localhost:8000/api';
-export const checkoutSuccessUrl = 'http://localhost:8080/checkout/success';
-export const checkoutCancelUrl = 'http://localhost:8080/checkout/cancel';
+// export const apiUrl = 'http://localhost:8000/api';
+// export const checkoutSuccessUrl = 'http://localhost:8080/checkout/success';
+// export const checkoutCancelUrl = 'http://localhost:8080/checkout/cancel';
+export const apiUrl = process.env.API_URL;
+export const checkoutSuccessUrl = process.env.SUCCESS_CHECKOUT_URL;
+export const checkoutCancelUrl = process.env.CANCEL_CHECKOUT_URL;
 
 const instance = axios.create({
   baseURL: apiUrl,
