@@ -74,7 +74,7 @@ const devConfig = {
           loader: 'url-loader',
           options: {
             limit: 1024,
-            name: 'img/[sha512:hash:base64:7].[ext]'
+            name: 'assets/[name].[ext]'
           }
         }
       }
@@ -82,7 +82,12 @@ const devConfig = {
   },
   plugins:[
     new webpack.NoEmitOnErrorsPlugin(),
-    new CopyWebpackPlugin([{from:'./assets/favicon.ico'},{from:'./assets/mfest.json'}]),
+    new CopyWebpackPlugin([
+      { from: './assets/favicon.ico',to: `${rootPath}./dist` },
+      { from: './assets/img/192icon.png',to: `${rootPath}./dist/assets` },
+      { from: './assets/img/512icon.png',to: `${rootPath}./dist/assets` },
+      { from: './assets/mfest.json',to: `${rootPath}./dist` }
+    ]),
     new webpack.HotModuleReplacementPlugin(),
     new ProgressBarPlugin({summary: false}),
     new ExtractTextPlugin({filename: 'style.[hash].css',}),

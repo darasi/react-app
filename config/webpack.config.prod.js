@@ -74,7 +74,7 @@ const prodConfig={
           loader: 'url-loader',
           options: {
             limit: 1024,
-            name: 'img/[name].[ext]'
+            name: 'assets/[name].[ext]'
           }
         }
       }
@@ -88,7 +88,12 @@ const prodConfig={
       filename: 'css/style.[hash].css',
       allChunks: true,
     }),
-    new CopyWebpackPlugin([{from:'./assets/favicon.ico',to: `${rootPath}./dist`}, {from:'./assets/mfest.json',to: `${rootPath}./dist`}]),
+    new CopyWebpackPlugin([
+      { from: './assets/favicon.ico',to: `${rootPath}./dist` },
+      { from: './assets/img/192icon.png',to: `${rootPath}./dist/assets` },
+      { from: './assets/img/512icon.png',to: `${rootPath}./dist/assets` },
+      { from: './assets/mfest.json',to: `${rootPath}./dist` }
+    ]),
     new CleanWebpackPlugin(['./dist'],{root: rootPath,}),
     // new webpack.DefinePlugin({
     //   'process.env.NODE_ENV':JSON.stringify(process.env.NODE_ENV)
@@ -116,12 +121,12 @@ const prodConfig={
       filename: path.join(rootPath,'./dist/react-loadable.json'),
     }),
     new SWPrecacheWebpackPlugin({
-      cacheId: 'cacheId',
+      cacheId: 'cache-[hash]',
       dontCacheBustUrlsMatching: /\.\w{8}\./,
       filename: 'service-worker.js',
       minify: true,
-      navigateFallback: '/',
-      staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/, /.*\.html/],
+      navigateFallback: '/index.html',
+      staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
     }),
   ]
 }
