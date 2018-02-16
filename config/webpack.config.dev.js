@@ -89,6 +89,7 @@ const devConfig = {
     // new webpack.DefinePlugin({
     //   'process.env.NODE_ENV':JSON.stringify(process.env.NODE_ENV || 'development')
     // }),
+    new Dotenv({ path: './.dev.env' }),
     new webpack.optimize.CommonsChunkPlugin({
       name:['vendors','manifest'],
       minChunks:2

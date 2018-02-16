@@ -7,6 +7,6 @@ export const getUsers = () => async(dispatch) => {
     const data = await Api.user.getUsers();
     dispatch({ type: constants.REQUEST_USERS_SUCCESS, data });
   } catch(err) {
-    dispatch({ type: constants.REQUEST_USERS_FAIL, errors: err });
+    dispatch({ type: constants.REQUEST_USERS_FAIL });
   }
 }
