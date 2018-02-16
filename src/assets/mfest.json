@@ -1,10 +1,15 @@
 {
-    "short_name": "React App",
-    "name": "React App",
+    "short_name": "MELON",
+    "name": "MELON",
     "icons": [
       {
-        "src": "favicon.ico",
-        "sizes": "96x96",
+        "src": "/assets/192icon.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "/assets/512icon.png",
+        "sizes": "512x512",
         "type": "image/png"
       }
     ],
