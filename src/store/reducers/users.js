@@ -4,8 +4,8 @@ const initialState = {
     loading: false,
     errors: {},
     data: {
-        data: [],
-        pagination: {}
+      data: [],
+      pagination: {}
     }
 };
 
@@ -16,7 +16,7 @@ const users = (state = initialState, action) => {
     case constants.REQUEST_USERS_SUCCESS:
       return { ...state, loading: false, data: action.data };
     case constants.REQUEST_USERS_FAIL:
-      return { ...state, loading: false, errors: action.errors };
+      return { ...state, loading: false };
     default:
       return state;
   }

@@ -7,6 +7,7 @@ const { ReactLoadablePlugin } = require('react-loadable/webpack') ;
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 const isServer = process.env.BUILD_TYPE === 'server';
 const rootPath = path.join(__dirname,'../');
@@ -22,7 +23,7 @@ const prodConfig={
     path:path.resolve(rootPath,'./dist'),
     publicPath:'/',
     chunkFilename: '[name]-[hash:8].js',
-    /* libraryTarget: isServer ? 'commonjs2' : 'umd', */
+    libraryTarget: isServer ? 'commonjs2' : 'umd',
   },
   resolve:{
     extensions:[".js",".jsx",".css",".less",".scss",".png",".jpg"],
@@ -80,6 +81,7 @@ const prodConfig={
     ]
   },
   plugins:[
+    new Dotenv({ path: './.env', systemvars: true }),
     new ManifestPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new ExtractTextPlugin({
@@ -88,9 +90,9 @@ const prodConfig={
     }),
     new CopyWebpackPlugin([{from:'./assets/favicon.ico',to: `${rootPath}./dist`}, {from:'./assets/mfest.json',to: `${rootPath}./dist`}]),
     new CleanWebpackPlugin(['./dist'],{root: rootPath,}),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV':JSON.stringify(process.env.NODE_ENV)
-    }),
+    // new webpack.DefinePlugin({
+    //   'process.env.NODE_ENV':JSON.stringify(process.env.NODE_ENV)
+    // }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new HtmlWebpackPlugin({
       title:'',
@@ -119,7 +121,7 @@ const prodConfig={
       filename: 'service-worker.js',
       minify: true,
       navigateFallback: '/',
-      staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
+      staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/, /.*\.html/],
     }),
   ]
 }
