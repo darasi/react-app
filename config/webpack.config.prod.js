@@ -126,7 +126,7 @@ const prodConfig={
       filename: 'service-worker.js',
       minify: true,
       navigateFallback: '/index.html',
-      staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
+      staticFileGlobsIgnorePatterns: [/\.map$/, /\.json$/, /\.html$/],
     }),
   ]
 }
