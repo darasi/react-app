@@ -3,13 +3,16 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Container, Grid, Segment, Header, Divider } from 'semantic-ui-react';
+import { FormattedMessage as Tr } from 'react-intl';
+
+import * as actions  from '../store/actions/auth';
 import RegisterForm from '../components/auth/RegisterForm';
+import FacebookLoginButton from '../components/shared/FacebookLoginButton';
 import '../assets/css/registerPage.scss';
 
 class Register extends Component {
-  componentDidMount() {
-    // if(this.props.auth.isAuth) this.props.history.push('/');
-  }
+
+  fbAuth = (result) => this.props.fbAuth(result);
 
   render() {
     return (
@@ -22,6 +25,10 @@ class Register extends Component {
               </Header>
               <Divider />
               <Segment>
+                <FacebookLoginButton fbAuth={this.fbAuth} />
+                <Divider horizontal>
+                  <Tr id="or" />
+                </Divider>
                 <RegisterForm />
               </Segment>
             </Grid.Column>
@@ -33,14 +40,11 @@ class Register extends Component {
 }
 
 Register.propTypes = {
-  history: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired
+  fbAuth: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-  auth: state.auth
-});
+const mapDispatchToProps = dispatch => bindActionCreators({
+  fbAuth: actions.fbAuth,
+}, dispatch);
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default connect(null, mapDispatchToProps)(Register);

@@ -1,3 +1,6 @@
 @import 'variables';
 @import 'mixins';
 
+a, button {
+    font-family: $fontFam !important;
+}
