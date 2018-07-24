@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { apiUrl, checkoutSuccessUrl, checkoutCancelUrl } from '../api';
 import * as actions from '../store/actions/checkout';
-import '../assets/css/index.scss';
 
 class User extends Component {
   state = {
