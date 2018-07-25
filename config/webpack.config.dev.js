@@ -33,10 +33,10 @@ const prodConfig = {
 	optimization: {
 		noEmitOnErrors: true,
 		splitChunks: {
-			minChunks: 2,
+      // chunks: "all",
 			automaticNameDelimiter: "-",
 			cacheGroups: {
-				vendors: {
+				vendor: {
 					name: "vendor",
 					test: /[\\/]node_modules[\\/]/,
 					chunks: "initial",
