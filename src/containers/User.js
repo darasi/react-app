@@ -28,7 +28,7 @@ class User extends Component {
     }
   };
 
-  handleImportModelClick = () => import('./Model').then(Model => this.setState({ Model }));
+  handleImportModelClick = () => import(/* webpackChunkName: 'Model' */'./Model').then(Model => this.setState({ Model: Model.default }));
 
   handleCheckoutPaypal = () => this.props.paypal(this.state.data);
 

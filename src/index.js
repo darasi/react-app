@@ -14,6 +14,9 @@ addLocaleData(en);
 
 const initialState = window && window.__INITIAL_STATE__;
 let history = createHistory();
+history.listen((location, action) => {
+  window.scrollTo(0, 0);
+});
 let { configureStore, createApp } = app;
 let store = configureStore(initialState);
 

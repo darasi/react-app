@@ -55,7 +55,7 @@ const prodConfig = {
           loader:'babel-loader',
           options:{
             presets: ['env', 'react', 'stage-0'],
-            plugins: ['transform-runtime', 'add-module-exports'] ,
+            plugins: ['transform-runtime', 'add-module-exports', 'syntax-dynamic-import'],
             cacheDirectory: true,
           }
         }
