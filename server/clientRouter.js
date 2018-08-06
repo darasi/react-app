@@ -67,8 +67,8 @@ const clientRouter = async(ctx,next) => {
   let html = fs.readFileSync(path.join(path.resolve(__dirname,'../dist'),'index.html'),'utf-8');
   let store = createStore(configureStore);
   let branch = matchRoutes(routesConfig,ctx.req.url)
-  let promises = branch.map(({route}) => {
-    return route.thunk ? (route.thunk(store)) : Promise.resolve(null)
+  let promises = branch.map(({ route, match }) => {
+    return route.thunk ? (route.thunk(store, match)) : Promise.resolve(null)
   });
   
   await Promise.all(promises).catch(err => console.log('err:---',err))

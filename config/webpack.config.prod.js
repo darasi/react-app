@@ -51,7 +51,13 @@ const prodConfig = {
       new UglifyJsPlugin({
         cache: true,
         parallel: true,
-        sourceMap: true
+        sourceMap: true, 
+        uglifyOptions: {
+          output: {
+            comments: false,
+            beautify: false
+          }
+        }
       }),
       new OptimizeCSSAssetsPlugin()
     ]

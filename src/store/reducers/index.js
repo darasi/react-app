@@ -6,6 +6,7 @@ import auth from './auth';
 import locale from './locale';
 import { formErrors } from './formErrors';
 import checkout from './checkout';
+import site from './site';
 
 export default combineReducers({
   router: routerReducer,
@@ -15,5 +16,6 @@ export default combineReducers({
   homeInfo,
   users,
   formErrors,
-  checkout
+  checkout,
+  site,
 })

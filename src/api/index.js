@@ -20,6 +20,9 @@ const Api = {
   },
   checkout: {
     paypal: (data = null) => instance.post('/checkout/paypal', data).then(res => res.data)
+  },
+  site: {
+    getSiteInfo: (pid = null) => instance.get(`/users/${pid}`).then(res => res.data)
   }
 };
 

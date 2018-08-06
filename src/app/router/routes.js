@@ -1,5 +1,5 @@
 import Loadable from 'react-loadable';
-import { homeThunk, getUsersThunk } from '../../store/actions/thunk';
+import { homeThunk, getUsersThunk, getSiteInfo } from '../../store/actions/thunk';
 import Loading from '../../components/Loading';
 import { userIsAuthenticatedRedir, userIsNotAuthenticatedRedir } from '../../components/hoc/ReduxAuthWrapper';
 
@@ -28,6 +28,11 @@ const LoadableLogin = Loadable({
   loading: Loading,
   delay: 50
 });
+const LoadableSite = Loadable({
+  loader: () => import(/* webpackChunkName: 'Site' */'../../containers/Site'),
+  loading: Loading,
+  delay: 50
+});
 
 const routesConfig = [{
   path: '/',
@@ -50,6 +55,10 @@ const routesConfig = [{
   path: '/login',
   component: userIsNotAuthenticatedRedir(LoadableLogin),
   thunk: () => {}
+}, {
+  path: '/site/:site',
+  component: LoadableSite,
+  thunk: getSiteInfo
 }];
 
 export default routesConfig;

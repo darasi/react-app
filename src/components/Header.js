@@ -33,6 +33,9 @@ class Header extends Component {
           <NavLink to="/user">USER</NavLink>
         </Responsive>
         <Responsive as={Menu.Item} minWidth={768}>
+          <NavLink to="/site/1">SITE</NavLink>
+        </Responsive>
+        <Responsive as={Menu.Item} minWidth={768}>
           <a onClick={logout}>LOGOUT</a>
         </Responsive>
       </React.Fragment>
