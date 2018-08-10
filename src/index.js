@@ -1,35 +1,23 @@
 /* eslint-disable */
-import { hydrate, render } from 'react-dom';
-import createHistory from 'history/createBrowserHistory';
-import { addLocaleData } from 'react-intl';
-import ka from 'react-intl/locale-data/ka';
-import en from 'react-intl/locale-data/en';
+import { hydrate } from 'react-dom';
 import Loadable from 'react-loadable';
-import app from './app/index';
+import init from './translation/init';
+import { configureStore, createApp } from './app/index';
 import { getCurrentUser } from './store/actions/auth';
 import { setLocale } from './store/actions/locale';
 
-addLocaleData(ka);
-addLocaleData(en);
-
-const initialState = window && window.__INITIAL_STATE__;
-export const history = createHistory();
+init();
+const { store, history } = configureStore();
 history.listen((location, action) => {
   window.scrollTo(0, 0);
 });
-let { configureStore, createApp } = app;
-let store = configureStore(initialState);
 
 if (localStorage.jwt) store.dispatch(getCurrentUser());
 if (localStorage.lang) store.dispatch(setLocale(localStorage.lang));
 
 const renderApp = () => {
   let application = createApp({ store, history });
-  if (process.env.NODE_ENV === 'development') {
-    render(application, document.getElementById('root'));
-  } else {
-    hydrate(application, document.getElementById('root'));
-  }
+  hydrate(application, document.getElementById('root'));
 };
 
 window.main = () => {

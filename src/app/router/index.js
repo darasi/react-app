@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Route } from 'react-router-dom';
-import { ConnectedRouter } from 'react-router-redux';
+import { Route, Switch } from 'react-router-dom';
+import { ConnectedRouter } from 'connected-react-router';
 import { IntlProvider } from 'react-intl';
 import translation from '../../translation';
 import routesConfig from './routes';
@@ -14,7 +14,7 @@ class Routers extends PureComponent {
     return (
       <IntlProvider locale={lang} messages={translation[lang]}>
         <ConnectedRouter history={history}>
-          <React.Fragment>
+          <Switch>
             {routesConfig.map(route => (
               <Route
                 key={route.path}
@@ -24,7 +24,7 @@ class Routers extends PureComponent {
                 thunk={route.thunk}
               />
             ))}
-          </React.Fragment>
+          </Switch>
         </ConnectedRouter>
       </IntlProvider>
     );
