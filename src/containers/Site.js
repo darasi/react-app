@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Loadable from 'react-loadable';
 import * as actions from '../store/actions/site';
 
 const HomePage1 = Loadable({
-    loader: () => import(/* webpackChunkName: 'SiteHomePage1' */`../themes/1/HomePage`),
-    loading: () => null,
+  loader: () => import(/* webpackChunkName: 'SiteHomePage1' */`../themes/1/HomePage`),
+  loading: () => null,
+});
+
+const HomePage2 = Loadable({
+  loader: () => import(/* webpackChunkName: 'SiteHomePage2' */`../themes/2/HomePage`),
+  loading: () => null,
 });
 
 class Site extends Component { 
   componentDidMount() {
-    if(this.props.site.fetched === false) this.props.getInfo(this.props.match.params.site);
+    if (this.props.site.fetched === false) this.props.getInfo(this.props.match.params.site);
   }
 
   render() {
@@ -22,6 +26,8 @@ class Site extends Component {
     switch(site.customer.id) {
       case 1:
         return <HomePage1 customer={site.customer} />
+      case 2:
+        return <HomePage2 customer={site.customer} />
       default:
         return null;
     }
@@ -39,7 +45,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  getInfo: actions.getInfo
+  getInfo: actions.getInfo,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Site);

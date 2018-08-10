@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 import Loadable from 'react-loadable';
 import Routers from './router/index';
@@ -21,6 +22,12 @@ const createApp = ({ store, history, modules }) => {
       <Routers history={history} />
     </Provider>
   );
+};
+
+createApp.propTypes = {
+  store: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  modules: PropTypes.any.isRequired
 };
 
 export default createApp;

@@ -13,7 +13,7 @@ addLocaleData(ka);
 addLocaleData(en);
 
 const initialState = window && window.__INITIAL_STATE__;
-let history = createHistory();
+export const history = createHistory();
 history.listen((location, action) => {
   window.scrollTo(0, 0);
 });

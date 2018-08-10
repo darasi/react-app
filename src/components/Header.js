@@ -8,6 +8,7 @@ import { FormattedMessage as Tr } from 'react-intl';
 import * as actions from '../store/actions/auth';
 import * as localeActions from '../store/actions/locale';
 import { userIsAuthenticated, userIsNotAuthenticated } from '../components/hoc/ReduxAuthWrapper';
+import '../assets/css/header.scss';
 
 class Header extends Component {
   componentDidMount() {

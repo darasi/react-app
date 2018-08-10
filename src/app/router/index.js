@@ -6,8 +6,6 @@ import { ConnectedRouter } from 'react-router-redux';
 import { IntlProvider } from 'react-intl';
 import translation from '../../translation';
 import routesConfig from './routes';
-import Header from '../../components/Header';
-import '../../assets/css/header.scss';
 
 class Routers extends PureComponent {
   render() {
@@ -17,7 +15,6 @@ class Routers extends PureComponent {
       <IntlProvider locale={lang} messages={translation[lang]}>
         <ConnectedRouter history={history}>
           <React.Fragment>
-            <Header />
             {routesConfig.map(route => (
               <Route
                 key={route.path}
@@ -27,7 +24,6 @@ class Routers extends PureComponent {
                 thunk={route.thunk}
               />
             ))}
-            <footer>Copyright © 2017 Melon</footer>
           </React.Fragment>
         </ConnectedRouter>
       </IntlProvider>
