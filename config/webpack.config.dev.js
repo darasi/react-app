@@ -3,123 +3,123 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const Dotenv = require('dotenv-webpack');
 
-const rootPath = path.join(__dirname,'../');
+const rootPath = path.join(__dirname, '../');
 
 const prodConfig = {
-  mode: 'development',  
-  context: path.join(rootPath,'./src'),
+  mode: 'development',
+  context: path.join(rootPath, './src'),
   entry: {
-    client:'./index.js',
-    vendors:['react','react-dom','react-loadable','react-redux','redux','react-router-dom','connected-react-router','redux-thunk'],
+    client: './index.js'
   },
-  output:{
-    filename:'[name].[hash:8].js',
-    path:path.resolve(rootPath,'./dist'),
-    publicPath:'/',
+  output: {
+    filename: '[name].[hash:8].js',
+    path: path.resolve(rootPath, './dist'),
+    publicPath: '/',
     chunkFilename: '[name]-[hash:8].js',
   },
-  resolve:{
-    extensions:[".js",".jsx",".css",".less",".scss",".png",".jpg"],
-    modules:[path.resolve(rootPath, "src"), "node_modules"],
+  resolve: {
+    extensions: ['.js', '.jsx', '.css', '.less', '.scss', '.png', '.jpg'],
+    modules: [path.resolve(rootPath, 'src'), 'node_modules'],
   },
-  devServer:{
+  devServer: {
     contentBase: 'assets',
     hot: true,
     historyApiFallback: true,
   },
-	optimization: {
-		noEmitOnErrors: true,
-		splitChunks: {
-      chunks: "all",
-			automaticNameDelimiter: "-",
-			cacheGroups: {
-				vendor: {
-					name: "vendor",
-					test: /[\\/]node_modules[\\/]/,
-					chunks: "initial",
-					minChunks: 2
-				}
-			}
-		}
-	},
-  module:{
-    rules:[
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      automaticNameDelimiter: '-',
+      cacheGroups: {
+        commons: {
+          name: 'vendors',
+          test: /[\\/]node_modules[\\/]/,
+          chunks: 'all',
+          // minChunks: 2,
+        },
+      },
+    },
+  },
+  module: {
+    rules: [
       {
-        test:/\.jsx?$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
-        include:path.resolve(rootPath, "src"),
-        use:{
-          loader:'babel-loader',
-          options:{
+        include: path.resolve(rootPath, 'src'),
+        use: {
+          loader: 'babel-loader',
+          options: {
             presets: ['env', 'react', 'stage-0'],
             plugins: ['transform-runtime', 'add-module-exports', 'syntax-dynamic-import'],
             cacheDirectory: true,
-          }
-        }
-      },{
-				test: /\.(css|scss)$/,
-        exclude:/node_modules/,
-        include: path.resolve(rootPath, "src"),
+          },
+        },
+      },
+      {
+        test: /\.(css|scss)$/,
+        exclude: /node_modules/,
+        include: path.resolve(rootPath, 'src'),
         use: [
           MiniCssExtractPlugin.loader,
-					{
+          {
             loader: 'css-loader',
             options: {
-              minimize:true,
-            }
+              minimize: true,
+            },
           },
           {
-            loader:'postcss-loader',
+            loader: 'postcss-loader',
             options: {
-              plugins:()=>[require('autoprefixer')({browsers:'last 5 versions'})],
-              minimize:true,
-            }
+              plugins: () => [require('autoprefixer')({ browsers: 'last 5 versions' })],
+              minimize: true,
+            },
           },
           {
-            loader:'sass-loader',
-            options:{
-              minimize:true,
-            }
-          }
-        ]
-      },{
+            loader: 'sass-loader',
+            options: {
+              minimize: true,
+            },
+          },
+        ],
+      },
+      {
         test: /\.(svg|woff2?|ttf|eot|jpe?g|png|gif)(\?.*)?$/i,
-        exclude:/node_modules/,
+        exclude: /node_modules/,
         use: {
           loader: 'url-loader',
           options: {
             limit: 1024,
-            name: 'assets/[name].[ext]'
-          }
-        }
-      }
-    ]
+            name: 'assets/[name].[ext]',
+          },
+        },
+      },
+    ],
   },
-  plugins:[
+  plugins: [
     new Dotenv({ path: './.env', systemvars: true }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
     }),
-    new ProgressBarPlugin({summary: false}),
+    new ProgressBarPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new MiniCssExtractPlugin({
-			filename: 'css/[name].[hash].css',
-			chunkFilename: 'css/[id].[hash].css',
-		}),
+      filename: 'css/[name].[hash].css',
+      chunkFilename: 'css/[id].[hash].css',
+    }),
     new CopyWebpackPlugin([
-      { from: './assets/favicon.ico',to: `${rootPath}./dist` },
-      { from: './assets/img/192icon.png',to: `${rootPath}./dist/assets` },
-      { from: './assets/img/512icon.png',to: `${rootPath}./dist/assets` },
-      { from: './assets/mfest.json',to: `${rootPath}./dist` }
+      { from: './assets/favicon.ico', to: `${rootPath}./dist` },
+      { from: './assets/img/192icon.png', to: `${rootPath}./dist/assets` },
+      { from: './assets/img/512icon.png', to: `${rootPath}./dist/assets` },
+      { from: './assets/mfest.json', to: `${rootPath}./dist` },
     ]),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new HtmlWebpackPlugin({
-      title:'',
-      filename:'index.html',
-      template:'./assets/index.ejs',
+      title: '',
+      filename: 'index.html',
+      template: './assets/index.ejs',
       minify: {
         removeComments: true,
         collapseWhitespace: true,
@@ -130,7 +130,7 @@ const prodConfig = {
         minifyURLs: true,
       },
     }),
-  ]
-}
+  ],
+};
 
-module.exports = prodConfig
+module.exports = prodConfig;
