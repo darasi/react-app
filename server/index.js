@@ -12,16 +12,17 @@ require('dotenv').config({path: envPath});
 
 const app = require('./app.js').default;
 const clientRouter = require('./clientRouter.js').default;
-const staticCache  = require("koa-static-cache");
+const serve = require('koa-static');
 const Loadable = require('react-loadable');
 
 const host = process.env.APP_HOST || 'http://localhost';
 const port = parseInt(process.env.APP_PORT, 10) || 3005;
 
 app.use(clientRouter);
-app.use(staticCache (path.resolve(__dirname,'../dist'),{
+app.use(serve(path.resolve(__dirname,'../dist'),{
   maxAge: 365 * 24 * 60 * 60,
-  gzip: true
+  gzip: true,
+  br: true
 }));
 
 console.log(`\n==> 🌎  Listening on port ${port}. Open up ${host}:${port}/ in your browser.\n`);

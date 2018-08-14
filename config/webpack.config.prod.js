@@ -10,7 +10,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
-// const BrotliPlugin = require('brotli-webpack-plugin');
+const CompressionPlugin = require("compression-webpack-plugin");
+const BrotliPlugin = require('brotli-webpack-plugin');
 
 const isServer = process.env.BUILD_TYPE === 'server';
 const rootPath = path.join(__dirname, '../');
@@ -159,7 +160,8 @@ const prodConfig = {
       navigateFallback: '/index.html',
       staticFileGlobsIgnorePatterns: [/\.map$/, /\.json$/, /\.html$/],
     }),
-    // new BrotliPlugin(),
+    new CompressionPlugin(),
+    new BrotliPlugin(),
   ],
 };
 
