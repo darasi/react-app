@@ -4,7 +4,6 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actions from '../store/actions/users';
-import Header from '../components/Header';
 import SectionHero from '../components/SectionHero';
 
 class HomePage extends Component { 
@@ -14,7 +13,6 @@ class HomePage extends Component {
 
   render() {
     return [
-      <Header key="Header" />,
       <Helmet key="Helmet">
         <title>react koa</title>
       </Helmet>,

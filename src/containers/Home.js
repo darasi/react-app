@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import * as actions  from '../store/actions/home';
-import Header from '../components/Header';
-import Page from '../containers/Page';
 
 class Home extends Component {
   componentDidMount(){
@@ -12,17 +10,15 @@ class Home extends Component {
   }
 
   render(){
-    let { add,count,homeInfo:{ name,age } } = this.props;
-    return [
-      <Header key="Header" />,
-      <section key="h">
+    const { add,count,homeInfo:{ name,age } } = this.props;
+    return (
+      <section>
         <p>{ count }</p>
         <p>nnnn：{name} - neaeaea：{age}</p>
         <button style={{backgroundColor:'#eee'}} onClick={()=>add(count + 1)}>ADD</button>
         <Link to='/user'>User</Link>
-      </section>,
-      <Page key="Page" />
-    ];
+      </section>
+    );
   }
 }
 

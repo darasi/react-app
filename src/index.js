@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { hydrate } from 'react-dom';
+import { hydrate, render } from 'react-dom';
 import Loadable from 'react-loadable';
 import init from './translation/init';
 import { configureStore, createApp } from './app/index';
@@ -17,7 +17,11 @@ if (localStorage.lang) store.dispatch(setLocale(localStorage.lang));
 
 const renderApp = () => {
   let application = createApp({ store, history });
-  hydrate(application, document.getElementById('root'));
+  if (process.env.NODE_ENV === 'production') {
+    hydrate(application, document.getElementById('root'));
+  } else {
+    render(application, document.getElementById('root'));
+  }
 };
 
 window.main = () => {

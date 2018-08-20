@@ -7,6 +7,12 @@ import { IntlProvider } from 'react-intl';
 import translation from '../../translation';
 import routesConfig from './routes';
 
+const AppRoute = ({ layout: Layout, ...rest }) => (
+  <Layout>
+    <Route {...rest} />
+  </Layout>
+);
+
 class Routers extends PureComponent {
   render() {
     const { history, lang } = this.props;
@@ -16,12 +22,13 @@ class Routers extends PureComponent {
         <ConnectedRouter history={history}>
           <Switch>
             {routesConfig.map(route => (
-              <Route
+              <AppRoute
                 key={route.path}
                 exact={route.exact}
                 path={route.path}
                 component={route.component}
                 thunk={route.thunk}
+                layout={route.layout}
               />
             ))}
           </Switch>
@@ -34,6 +41,10 @@ class Routers extends PureComponent {
 Routers.propTypes = {
   history: PropTypes.object.isRequired,
   lang: PropTypes.string.isRequired
+};
+
+AppRoute.propTypes = {
+  layout: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
